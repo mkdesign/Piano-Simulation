@@ -28,6 +28,16 @@
 		oscillator2.type = 'square';
 		oscillator2.frequency.value = 300;
 		oscillator2.start(3);
+
+		oscillator3 = context.createOscillator();
+		gain3 = context.createGain();
+		oscillator3.connect(gain3);
+		gain3.gain.value = 0.1;
+		gain3.connect(context.destination);
+
+		oscillator3.type = 'sine';
+		oscillator3.frequency.value = 440;
+		oscillator3.start(0);
 	</script>
 </body>
 </html>
