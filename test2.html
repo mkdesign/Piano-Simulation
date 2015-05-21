@@ -8,7 +8,11 @@
 </head>
 <body>
 	<script>
-		
+		var context = new AudioContext();
+			oscillator = context.createOscillator();
+
+		oscillator.connect(context.destination);
+		oscillator.start(1);
 	</script>
 </body>
 </html>
