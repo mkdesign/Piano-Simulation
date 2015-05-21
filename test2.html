@@ -16,6 +16,18 @@
 
 		oscillator.type = "triangle";
 		oscillator.frequency.value = 400;
+
+
+		oscillator2 = context.createOscillator();
+		gain2 = context.createGain();
+		oscillator2.connect(gain2);
+		gain2.connect(context.destination);
+
+		gain2.gain.value = 0.6;
+
+		oscillator2.type = 'square';
+		oscillator2.frequency.value = 300;
+		oscillator2.start(3);
 	</script>
 </body>
 </html>
