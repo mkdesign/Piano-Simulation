@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en-US" direction="ltr">
+<head>
+	<meta charset="utf-8" />
+	<title>Web Audio Test 4 | Buffer And Load a Sound File</title>
+	<script src="jquery.js" ></script>
+	
+</head>
+<body>
+	<div>
+	
+	</div>
+	<script>
+		(function () {
+			var context = new AudioContext();
+			var electro;
+
+			var getAudio = new XMLHttpRequest();
+			getAudio.open("GET","snare.wav",true);
+			getAudio.responseType = "arraybuffer";
+
+			getAudio.onload = function () {
+				context.decodeAudioData(getAudio.response,function(buffer){ //decode file and then Store it in variable electro
+					electro = buffer;
+				});
+			}
+			getAudio.send();
+
+			window.addEventListener("keydown",onKeyDown);
+
+			function onKeyDown (e){
+				switch (e.keyCode) {
+					case 88 : 
+					var playSound = context.createBufferSource();
+					playSound.buffer = electro;
+
+					playSound.connect(context.destination);
+					playSound.start(0);
+					break;
+				}
+			}
+
+		})();
+
+
+
+	</script>
+</body>
+</html>
