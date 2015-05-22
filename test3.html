@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Web Audio Test 3 | Controlling oscillators</title>
-
-
+	<script src="jquery.js" ></script>
+	
 </head>
 <body>
 	<div>
@@ -12,7 +12,37 @@
 		<div id="stop1">stop</div>
 	</div>
 	<script>
-		
+		$(function () {
+			var context = new AudioContext(),
+				oscillator,
+				gain;
+
+			function starOsc (_frq,_gain,_dly){
+				oscillator =  context.createOscillator();
+				gain = context.createGain();
+
+				oscillator.connect(gain);
+				gain.connect(context.destination);
+
+				oscillator.frequency.value = _frq;
+
+				gain.gain.value = _gain;
+				oscillator.start(_dly);
+			}
+			function stopOsc(){
+				oscillator.stop(0);
+				oscillator.disconnect();
+			}
+
+			$('#play1').click(function(){
+				starOsc(1000,0.1,3);
+			});
+
+			$('#stop1').click(function(){
+				stopOsc();
+			})
+
+		})
 	</script>
 </body>
 </html>
