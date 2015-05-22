@@ -11,6 +11,17 @@
 	
 	</div>
 	<script>
+		var getAudio = new XMLHttpRequest();
+		getAudio.open("GET","snare.wav",true);
+		getAudio.responseType = "arraybuffer";
+
+		getAudio.onload = function () {
+			context.decodeAudioData(getAudio.response,function(buffer){
+				electro = buffer;
+			});
+		}
+		getAudio.send();
+
 		
 	</script>
 </body>
