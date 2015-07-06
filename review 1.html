@@ -11,7 +11,14 @@
 	
 	</div>
 	<script>
-		
+		var context = new AudioContext();
+		var oscillator = context.createOscillator();
+
+		var gain = context.createGain();
+		gain.gain.value = 0.01;
+		oscillator.connect(gain);
+		gain.connect(context.destination);
+		oscillator.start();
 	</script>
 </body>
 </html>
