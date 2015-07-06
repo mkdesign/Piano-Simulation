@@ -14,6 +14,9 @@
 		var context = new AudioContext();
 		var oscillator = context.createOscillator();
 
+		oscillator.type = "triangle";
+		oscillator.frequency.value = 300;
+
 		var gainNode = context.createGain();
 		gainNode.gain.value = 0.01;
 		oscillator.connect(gainNode);
