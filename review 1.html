@@ -14,10 +14,10 @@
 		var context = new AudioContext();
 		var oscillator = context.createOscillator();
 
-		var gain = context.createGain();
-		gain.gain.value = 0.01;
-		oscillator.connect(gain);
-		gain.connect(context.destination);
+		var gainNode = context.createGain();
+		gainNode.gain.value = 0.01;
+		oscillator.connect(gainNode);
+		gainNode.connect(context.destination);
 		oscillator.start();
 	</script>
 </body>
