@@ -43,6 +43,12 @@
 			alert('everything is ready ');
 		}
 
+		function playsong (buffer, time){
+			var source = context.createBufferSource();
+			source.buffer = buffer;
+			source.connect(context.destination);
+			source.start(time);
+		}
 	</script>
 </body>
 </html>
