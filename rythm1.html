@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>First rythms</title>
 	<script src="jquery.js" ></script>
-	<script src="buffer-load.js" ></script>
+	<script src="buffer-load.js"></script>
 	
 </head>
 <body>
@@ -12,7 +12,36 @@
 		
 	</div>
 	<script>
-		
+		window.onload = init;
+
+		var context;
+		var bufferLoader;
+
+		function init() {
+		    try {
+		        context = new AudioContext();
+		    }
+		    catch(e) {
+		        alert("Web Audio API is not supported in this browser");
+		    }
+		    
+		    // Start loading the drum kit.
+		    bufferLoader = new BufferLoader(
+		        context,
+		        [
+		        "kick.wav",
+		        "snare.wav",
+		        "hat.wav"
+		        ],
+		        bufferLoadCompleted  
+		    );
+
+		    bufferLoader.load();
+		}
+
+		function bufferLoadCompleted (){
+			alert('everything is ready ');
+		}
 
 	</script>
 </body>
