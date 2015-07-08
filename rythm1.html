@@ -63,13 +63,13 @@
 			source.start(time);
 		}
 
-
+		var ratio = 240/60;
 
 		function playrythm (bufferList){
 			var startTime = context.currentTime + 0.100;
 			for(i=0;i<=songNotes.length;i++){
 				time += songRhythm[i];
-				playsong(bufferList[ songNotes[i] ],startTime+time);
+				playsong(bufferList[ songNotes[i] ],startTime+time*ratio);
 			}
 		}
 
