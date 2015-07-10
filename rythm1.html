@@ -162,12 +162,13 @@
 		var ratio = zarb/tempo;
 
 		function playrythm (bufferList){
+			console.log(bufferList.length);
 			var startTime = context.currentTime + 0.100;
 			for(i=0;i<=songNotes[0].length;i++){
-				timeR += songRhythm[0][i];
-				timeL += songRhythm[1][i];
-				playsong(bufferList[ songNotes[0][i] ],startTime+timeR*ratio);
-				playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
+				timeR += songRhythm[1][i];
+				timeL += songRhythm[0][i];
+				playsong(bufferList[ songNotes[1][i] ],startTime+timeR*ratio);
+				playsong(bufferList[ songNotes[0][i] ],startTime+timeL*ratio);
 			}
 		}
 
