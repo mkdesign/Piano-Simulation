@@ -1,0 +1,194 @@
+.clear{
+    clear     : both;
+    overflow  : hidden;
+    width     : 0 !important;
+    height    : 0 !important;
+    min-height: 0 !important;
+    min-width : 0 !important;
+    border    : 0 none !important;
+    float     : none !important;
+    margin    : 0 !important;
+    padding   : 0 !important;
+    display   : block !important;
+}
+div.keys{
+	background           : #000;
+	background           : -webkit-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
+	background           : -moz-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
+	background           : -ms-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
+	background           : -o-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
+	background           : linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
+	position             : relative;
+	left                 : 10px;
+	-webkit-box-shadow   : 0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
+	-moz-box-shadow      : 0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
+	box-shadow           : 0 2px 0px #666,0 3px 0px #555,0 4px 0px #444,0 6px 6px #000,inset 0 -1px 1px rgba(255,255,255,0.5),inset 0 -4px 5px #000;
+	border               : 2px solid #333;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius   : 0 0 5px 5px;
+	border-radius        : 0 0 5px 5px;
+	padding-bottom: 10px;
+}
+
+div.keys div.key{
+	display              : block;
+	height               : 139px;
+	background           : #fff;
+	background           : -webkit-linear-gradient(-30deg,#f5f5f5,#fff);
+	background           : -moz-linear-gradient(-30deg,#f5f5f5,#fff);
+	background           : -ms-linear-gradient(-30deg,#f5f5f5,#fff);
+	background           : -o-linear-gradient(-30deg,#f5f5f5,#fff);
+	background           : linear-gradient(-30deg,#f5f5f5,#fff);
+	border               : 1px solid #ccc;
+	-webkit-box-shadow   : inset 0 1px 0px #fff,inset 0 -1px 0px #fff,inset 1px 0px 0px #fff,inset -1px 0px 0px #fff,0 4px 3px rgba(0,0,0,0.7);
+	-moz-box-shadow      : inset 0 1px 0px #fff,inset 0 -1px 0px #fff,inset 1px 0px 0px #fff,inset -1px 0px 0px #fff,0 4px 3px rgba(0,0,0,0.7);
+	box-shadow           : inset 0 1px 0px #fff,inset 0 -1px 0px #fff,inset 1px 0px 0px #fff,inset -1px 0px 0px #fff,0 4px 3px rgba(0,0,0,0.7);
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius   : 0 0 3px 3px;
+	border-radius        : 0 0 3px 3px;
+	width                : 23px;
+	float: left;
+}
+
+div.keys div.key:active {
+	webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.4);
+	-moz-box-shadow  : 0 2px 2px rgba(0,0,0,0.4);
+	box-shadow       : 0 2px 2px rgba(0,0,0,0.4);
+	position         : relative;
+	top              : 2px;
+	height           : 135px;
+}
+
+
+div.keys div.key.black{		
+	position             : absolute;
+	top                  : 0px;
+	width                : 10px;
+	height               : 96px;
+	background           : #333;
+	background           : -webkit-linear-gradient(-20deg,#333,#000,#333);
+	background           : -moz-linear-gradient(-20deg,#333,#000,#333);
+	background           : -ms-linear-gradient(-20deg,#333,#000,#333);
+	background           : -o-linear-gradient(-20deg,#333,#000,#333);
+	background           : linear-gradient(-20deg,#333,#000,#333);
+	z-index              : 10;
+	border-width         : 1px 2px 7px;
+	border-style         : solid;
+	border-color         : #666 #222 #111 #555;
+	-webkit-box-shadow   : inset 0px -1px 2px rgba(255,255,255,0.4),0 2px 3px rgba(0,0,0,0.4);
+	-moz-box-shadow      : inset 0px -1px 2px rgba(255,255,255,0.4),0 2px 3px rgba(0,0,0,0.4);
+	box-shadow           : inset 0px -1px 2px rgba(255,255,255,0.4),0 2px 3px rgba(0,0,0,0.4);
+	-webkit-border-radius: 0 0 2px 2px;
+	-moz-border-radius   : 0 0 2px 2px;
+	border-radius        : 0 0 2px 2px;
+}
+
+div.keys div.b0{
+	left:17px;
+}
+div.keys div.b1{
+	left:67px;
+}
+div.keys div.b2{
+	left:93px;
+}
+div.keys div.b3{
+	left:143px;
+}
+div.keys div.b4{
+	left:168px;
+}
+div.keys div.b5{
+	left:193px;
+}
+div.keys div.b6{
+	left:243px;
+}
+div.keys div.b7{
+	left:268px;
+}
+div.keys div.b8{
+	left:317px;
+}
+div.keys div.b9{
+	left:342px;
+}
+div.keys div.b10{
+	left:368px;
+}
+div.keys div.b11{
+	left:418px;
+}
+div.keys div.b12{
+	left:443px;
+}
+div.keys div.b13{
+	left:493px;
+}
+div.keys div.b14{
+	left:518px;
+}
+div.keys div.b15{
+	left:543px;
+}
+div.keys div.b16{
+	left:593px;
+}
+div.keys div.b17{
+	left:618px;
+}
+div.keys div.b18{
+	left:668px;
+}
+div.keys div.b19{
+	left:693px;
+}
+div.keys div.b20{
+	left:717px;
+}
+div.keys div.b21{
+	left:768px;
+}
+div.keys div.b22{
+	left:792px;
+}
+div.keys div.b23{
+	left:842px;
+}
+div.keys div.b24{
+	left:867px;
+}
+div.keys div.b25{
+	left:893px;
+}
+div.keys div.b26{
+	left:943px;
+}
+div.keys div.b27{
+	left:968px;
+}
+div.keys div.b28{
+	left:1017px;
+}
+div.keys div.b29{
+	left:1042px;
+}
+div.keys div.b30{
+	left:1068px;
+}
+div.keys div.b31{
+	left:1118px;
+}
+div.keys div.b32{
+	left:1142px;
+}
+div.keys div.b33{
+	left:1192px;
+}
+div.keys div.b34{
+	left:1218px;
+}
+div.keys div.b35{
+	left:1242px;
+}
+
