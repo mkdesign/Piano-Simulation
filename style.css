@@ -13,11 +13,8 @@
 }
 
 html,body {
-	position: absolute;
-	top:0;
-	left:0;
-	right: 0;
-	bottom: 0;
+	height: 100%;
+	position: relative;
 	background-image: url('home_bg.jpg');
 	background-size: cover;
 }
@@ -37,8 +34,6 @@ div.keys{
 	-webkit-border-radius: 0 0 5px 5px;
 	-moz-border-radius   : 0 0 5px 5px;
 	border-radius        : 0 0 5px 5px;
-	bottom               : 0;
-	left                 : 0;
 	width                : 1303px;
 	margin               : 0 auto;
 	padding-bottom: 10px;
@@ -64,7 +59,8 @@ div.keys div.key{
 	float: left;
 }
 
-div.keys div.key:active {
+div.keys div.key:active,
+div.keys div.key.active {
 	webkit-box-shadow: 0 2px 2px rgba(0,0,0,0.4);
 	-moz-box-shadow  : 0 2px 2px rgba(0,0,0,0.4);
 	box-shadow       : 0 2px 2px rgba(0,0,0,0.4);
@@ -214,3 +210,25 @@ div.keys div.b35{
 	left:1242px;
 }
 
+div.control {
+	  background-image: url('./bg_noise.png');
+  position: absolute;
+  padding: 10px 0px 10px 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+div.control .play {
+	width: 20px;
+	height: 20px;
+	margin: 0 auto;
+	background-image: url('Play_button_arrowhead_32.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 27px;
+	background-color: #1f1f1f;
+	border-radius: 100%;
+	box-shadow: 0 0 10px #000 inset;
+	padding: 17px;
+}

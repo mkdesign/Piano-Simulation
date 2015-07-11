@@ -9,9 +9,6 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div>
-	
-	</div>
 
 	<div class="keys">
 
@@ -112,6 +109,9 @@
 		<div class="key"></div>
 
 		<div class="clear"></div>
+	</div>
+	<div class="control">
+		<div class="play" onclick="playrythm(bufferLoader.bufferList);"></div>
 	</div>
 	<script>
 		var songNotes=[];
@@ -274,7 +274,12 @@
 		}
 
 		function playrythm (bufferList){
+			var startTime = context.currentTime + 0.100;
 			for(i=0;i<=songNotes[0].length;i++){
+				keys.eq(songNotes[0][i-1]).removeClass("active");
+				keys.eq(songNotes[1][i-1]).removeClass("active");
+				keys.eq(songNotes[0][i]).addClass("active");
+				keys.eq(songNotes[1][i]).addClass("active");
 				timeR += songRhythm[0][i];
 				timeL += songRhythm[1][i];
 				playsong(bufferList[ songNotes[0][i] ],startTime+timeR*ratio);
