@@ -11,6 +11,17 @@
     padding   : 0 !important;
     display   : block !important;
 }
+
+html,body {
+	position: absolute;
+	top:0;
+	left:0;
+	right: 0;
+	bottom: 0;
+	background-image: url('home_bg.jpg');
+	background-size: cover;
+}
+
 div.keys{
 	background           : #000;
 	background           : -webkit-linear-gradient(-60deg,#000,#333,#000,#666,#333 70%);
@@ -26,9 +37,11 @@ div.keys{
 	-webkit-border-radius: 0 0 5px 5px;
 	-moz-border-radius   : 0 0 5px 5px;
 	border-radius        : 0 0 5px 5px;
-	padding-bottom       : 10px;
-	bottom:0;
-	left:0;
+	bottom               : 0;
+	left                 : 0;
+	width                : 1303px;
+	margin               : 0 auto;
+	padding-bottom: 10px;
 }
 
 div.keys div.key{
