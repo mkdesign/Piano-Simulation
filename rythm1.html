@@ -133,7 +133,7 @@
 
 		var ratio = zarb/tempo;
 
-		var keys = $('.keys key');
+		var keys = $('.keys').find('.key');
 		var bufferLoader;
 		var prev=-2;
 		var aniDelay = 0.100;
@@ -258,7 +258,7 @@
 		}
 
 		function bufferLoadCompleted (){
-			
+
 			var startTime = context.currentTime + 0.100;
 			var audios = bufferLoader.bufferList;
 			keys.each(function(){
