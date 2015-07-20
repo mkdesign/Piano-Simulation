@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8" />
 	<title>First rythms</title>
-	<script src="jquery.js" ></script>
-	<script src="buffer-load.js"></script>
 	<link rel="stylesheet" href="reset.css">
 	<link rel="stylesheet" href="style.css">
+	<script src="jquery.js" ></script>
+	<script src="buffer-load.js"></script>
 </head>
 <body>
 
@@ -133,8 +133,10 @@
 
 		var ratio = zarb/tempo;
 
-		var keys = $('.keys .key');
+		var keys = $('.keys key');
 		var bufferLoader;
+		var prev=-2;
+		var aniDelay = 0.100;
 
 
 		function init() {
@@ -256,6 +258,7 @@
 		}
 
 		function bufferLoadCompleted (){
+			
 			var startTime = context.currentTime + 0.100;
 			var audios = bufferLoader.bufferList;
 			keys.each(function(){
@@ -267,26 +270,46 @@
 		}
 
 		function playsong (buffer, time){
+
 			var source = context.createBufferSource();
+
 			source.buffer = buffer;
-			source.connect(context.destination);
-			source.start(time);
+			var gain = context.createGain();
+			gain.gain.value = 0.1;
+			source.connect(gain);
+			gain.connect(context.destination);
+			source.start(time,0,1);
 		}
 
 		function playrythm (bufferList){
 			var startTime = context.currentTime + 0.100;
-			for(i=0;i<=songNotes[0].length;i++){
-				keys.eq(songNotes[0][i-1]).removeClass("active");
-				keys.eq(songNotes[1][i-1]).removeClass("active");
-				keys.eq(songNotes[0][i]).addClass("active");
-				keys.eq(songNotes[1][i]).addClass("active");
-				timeR += songRhythm[0][i];
-				timeL += songRhythm[1][i];
-				playsong(bufferList[ songNotes[0][i] ],startTime+timeR*ratio);
-				playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
+			for(var aniDelay=0,j=1;j<songNotes[1].length;j++) {
+				(function(k){
+					setTimeout(function (){
+						console.log(aniDelay);
+						console.log(songRhythm[1][k]);
+						keys.eq(songNotes[1][k]).addClass('active');
+					},aniDelay);
+					aniDelay += songRhythm[1][k];
+				})(j);
 			}
-		}
 
+			for(i=0;i<songNotes[1].length ;i++){
+				if(i>songNotes[0].length){
+					timeL += songRhythm[1][i];
+					playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
+				}
+				else {
+					timeR += songRhythm[0][i];
+					timeL += songRhythm[1][i];
+					playsong(bufferList[ songNotes[0][i] ],startTime+timeR*ratio);
+					playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
+				}
+				
+			}
+
+
+		}
 
 	</script>
 </body>
