@@ -233,3 +233,10 @@ div.control .play {
 	box-shadow: 0 0 10px #000 inset;
 	padding: 17px;
 }
+
+p{
+	font-size: 30px;
+	margin: 20px auto 0;
+	text-align: center;
+	color:#aaa;
+}
