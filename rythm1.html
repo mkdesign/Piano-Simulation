@@ -110,7 +110,7 @@
 
 		<div class="clear"></div>
 	</div>
-	<p onclick="animateKeys(2);">Run The Mutta Fukka</p>
+	<p onclick="animateKeys(2,2000);">Run The Mutta Fukka</p>
 	<div class="control">
 		<div class="play" onclick="playrythm(bufferLoader.bufferList);"></div>
 	</div>
@@ -293,64 +293,71 @@
 			// 	})(j);
 			// }
 
-			for(i=0;i<songNotes[1].length ;i++){
-				if(i>songNotes[0].length){
-					timeL += songRhythm[1][i];
-					playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
-					animateKeys(songNotes[1][i]);
-				}
-				else {
-					timeR += songRhythm[0][i];
-					timeL += songRhythm[1][i];
-					playsong(bufferList[ songNotes[0][i] ],startTime+timeR*ratio);
-					playsong(bufferList[ songNotes[1][i] ],startTime+timeL*ratio);
-					animateKeys(songNotes[0][i]);
-					animateKeys(songNotes[1][i]);
-				}
+			for(i=1;i<songNotes[1].length ;i++){
+				(function(j){
+					if(j>songNotes[0].length){
+						timeL += songRhythm[1][j];
+						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
+						animateKeys(songNotes[1][j],songRhythm[1][j]);
+					}
+					else {
+						timeR += songRhythm[0][j];
+						timeL += songRhythm[1][j];
+						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio);
+						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
+						animateKeys(songNotes[0][j],songRhythm[0][j]);
+						animateKeys(songNotes[1][j],songRhythm[1][j]);
+					}
+				})(i);
 				
 			}
 
 
 		}
 
-		function animateKeys ( key ){
-			keys.eq(key).addClass('ok');
+		function animateKeys ( key, dly ){
+			// keys.eq(key).addClass('active');
 
-			// if(keys.eq(key).hasClass('black') ){
-			// 	var that = this;
-			// 	setTimeout(function(){
-			// 		$(that).animate({
-			// 			'border-bottom-width': '2px',
-			// 			'height': '100px',
-			// 		    'box-shadow': 'inset 0px -1px 1px rgba(255,255,255,0.4),0 1px 0px rgba(0,0,0,0.8),0 2px 2px rgba(0,0,0,0.4),0 -1px 0px #000'
-			// 		},300,null,function(){
-			// 			$(that).animate({
-			// 				'height': '96px',
-			// 				'box-shadow': 'inset 0px -1px 2px rgba(255,255,255,0.4),0 2px 3px rgba(0,0,0,0.4)',
-			// 				'border-bottom-width': '7px'
-			// 			},300)
-			// 		})
-			// 	},aniDelay)
-			// }
+			// var timeout = setTimeout(function(){
+			// 	keys.eq(key).removeClass('active');
+			// },dly);
 
-			// else{
-			// 	var that = this;
-			// 	setTimeout(function(){
-			// 		$(that).animate({
-			// 			'box-shadow': '0 2px 2px rgba(0,0,0,0.4)',
-   //  					'position': 'relative',
-			// 		    'top': '2px',
-			// 		    'height': '135px'
-			// 		},300,null,function(){
-			// 			$(that).css({
-			// 				'height': '139px',
-			// 				'top': 0,
-			// 				'box-shadow': 'inset 0 1px 0px #fff,inset 0 -1px 0px #fff,inset 1px 0px 0px #fff,inset -1px 0px 0px #fff,0 4px 3px rgba(0,0,0,0.7)',
-			// 				'position':'static'
-			// 			})
-			// 		})
-			// 	},aniDelay)
-			// }
+			// clearTimeout(timeout);
+
+			if(keys.eq(key).hasClass('black') ){
+				setTimeout(function(){
+					keys.eq(key).animate({
+						'border-bottom-width': '2px',
+						'height': '100px',
+					    'box-shadow': 'inset 0px -1px 1px rgba(255,255,255,0.4),0 1px 0px rgba(0,0,0,0.8),0 2px 2px rgba(0,0,0,0.4),0 -1px 0px #000'
+					},300,null,function(){
+						keys.eq(key).animate({
+							'height': '96px',
+							'box-shadow': 'inset 0px -1px 2px rgba(255,255,255,0.4),0 2px 3px rgba(0,0,0,0.4)',
+							'border-bottom-width': '7px'
+						},300)
+					})
+				},dly)
+			}
+
+			else{
+				
+				setTimeout(function(){
+					keys.eq(key).animate({
+						'box-shadow': '0 2px 2px rgba(0,0,0,0.4)',
+    					'position': 'relative',
+					    'top': '2px',
+					    'height': '135px'
+					},300,null,function(){
+						keys.eq(key).css({
+							'height': '139px',
+							'top': 0,
+							'box-shadow': 'inset 0 1px 0px #fff,inset 0 -1px 0px #fff,inset 1px 0px 0px #fff,inset -1px 0px 0px #fff,0 4px 3px rgba(0,0,0,0.7)',
+							'position':'static'
+						})
+					})
+				},dly)
+			}
 
 
 		}
