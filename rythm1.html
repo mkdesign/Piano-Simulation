@@ -110,7 +110,7 @@
 
 		<div class="clear"></div>
 	</div>
-	<p onclick="animateKeys(2,2000);">Run The Mutta Fukka</p>
+	<p onclick="animateKeys(2,2000);">Run</p>
 	<div class="control">
 		<div class="play" onclick="playrythm(bufferLoader.bufferList);"></div>
 	</div>
@@ -274,7 +274,7 @@
 			var source = context.createBufferSource();
 			source.buffer = buffer;
 			var gain = context.createGain();
-			gain.gain.value = 0.1;
+			gain.gain.value = 1;
 			source.connect(gain);
 			gain.connect(context.destination);
 			source.start(time,0,1);
@@ -282,6 +282,7 @@
 
 		function playrythm (bufferList){
 			var startTime = context.currentTime + 0.100;
+			alert(startTime);
 			// for(var aniDelay=0,j=1;j<songNotes[1].length;j++) {
 			// 	(function(k){
 			// 		setTimeout(function (){
@@ -358,6 +359,59 @@
 					})
 				},dly)
 			}
+
+
+		}
+
+		function show(){
+
+		    var num = [0,0,0,0];
+		    var className = ['ractive','lactive','ractive','lactive'];
+
+		    var lastNoteTime =0.5+ startTime + duration[0][ duration[0].length-1 ]*zarb/tempo;
+		    noteInterval = setInterval(function(){
+
+		        var currentTime = context.currentTime;
+		        	
+		        for( var i=0; i<duration.length; i++ ){
+		        	if( currentTime > (startTime + duration[i][num[i]]*zarb/tempo) ){ 
+
+			            if( notes[i][num[i]] instanceof Array ){
+			            	for( var j=0; j<notes[i][num[i]].length; j++ ){
+			            		$key.eq( notes[i][num[i]][j] ).addClass(className[i]);
+			            	}
+			            }else{
+				            var index = notes[i][num[i]];               
+			                if(index<88){                        
+			                    $key.eq(index).addClass(className[i]);   
+			                }              
+			            }
+		                num[i]++;
+		        	}
+
+			        if( currentTime > (startTime + (duration[i][num[i]]*zarb/tempo) - 0.070) ){
+			         //    if( notes[i][num[i]-1] instanceof Array ){
+			        	// 	for( var j=0; j<notes[i][num[i]-1].length; j++ ){
+			        	// 		$key.eq( notes[i][num[i]-1][j] ).removeClass(className[i]); 
+			        	// 	}
+			        	// }else{
+			        	// 	$key.eq( notes[i][num[i]-1] ).removeClass(className[i]);      
+			        	// } 
+			        	$key.removeClass(className[i]);      
+
+			        }
+			        //*********************
+
+			        if( currentTime>lastNoteTime ){  
+			            $key.removeClass('lactive'); 
+			            $key.removeClass('ractive'); 
+			            clearInterval(noteInterval);
+			        }
+
+
+		        }
+		  
+		    }, 4);
 
 
 		}
