@@ -282,18 +282,33 @@
 				source.start(time,0,1);
 			}
 
-			var tutorial = function(array,bufferList){
+			var tutorial = function(array,bufferList,keys,animateTime){
 				this.array = array;
 				this.bufferList = bufferList;
-				this.curren1 = 0;
-
+				this.curren1 = 1;
+				this.keys = keys;
+				this.animateTime=animateTime;
 			}
 
 			tutorial.prototype.show = function() {
-				alert(this.curren1);
+				//add animation
+				playsong(this.bufferList[this.array[this.curren1]],0);
+				this.keys.eq(this.array[this.curren1]).addClass('active');
+				//remove animation
+				var self = this;
+				setTimeout(function(){
+					self.keys.eq(self.array[self.curren1]).removeClass('active');
+				},1000);
 			};
 
-			tut = new tutorial(songNotes[0],bufferLoader.bufferList);
+			tutorial.prototype.next = function() {
+				if(this.curren1 < this.array.length){
+					return curren1++;
+				}
+				return null;
+			};
+
+			tut = new tutorial(songNotes[0],bufferLoader.bufferList,keys,songRhythm[0]);
 		})
 
 
