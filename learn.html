@@ -290,6 +290,21 @@
 				this.animateTime=animateTime;
 			}
 
+			tutorial.prototype.getAnswer = function(){
+				var that = this;
+				var interval = setInterval(function(){
+					alert('please press the right key');
+					$(document).keypress(function(event){
+						clearInterval(interval);
+						if(event.which == 97) {
+							that.keys.eq(that.array[that.curren1]).css({
+								'background' : 'red'
+							});
+						}
+					});
+				},3000)	
+			}
+
 			tutorial.prototype.show = function() {
 				//add animation
 				playsong(this.bufferList[this.array[this.curren1]],0);
@@ -299,6 +314,7 @@
 				setTimeout(function(){
 					self.keys.eq(self.array[self.curren1]).removeClass('active');
 				},1000);
+				this.getAnswer();
 			};
 
 			tutorial.prototype.next = function() {
