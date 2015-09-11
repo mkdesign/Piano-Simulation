@@ -297,9 +297,11 @@
 					$(document).keypress(function(event){
 						clearInterval(interval);
 						if(event.which == 97) {
-							that.keys.eq(that.array[that.curren1]).css({
-								'background' : 'red'
-							});
+							that.keys.eq(that.array[that.curren1]).addClass('active')
+							setTimeout(function(){
+								that.keys.eq(that.array[that.curren1]).removeClass('active');
+							},1000);
+							return that.next_step();
 						}
 					});
 				},3000)	
@@ -317,9 +319,11 @@
 				this.getAnswer();
 			};
 
-			tutorial.prototype.next = function() {
+			tutorial.prototype.next_step = function() {
 				if(this.curren1 < this.array.length){
-					return curren1++;
+					
+					this.curren1++;
+					return this.show();
 				}
 				return null;
 			};
