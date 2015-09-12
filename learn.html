@@ -288,34 +288,53 @@
 				this.curren1 = 1;
 				this.keys = keys;
 				this.animateTime=animateTime;
+				this.userAnswered = false;
 			}
 
 			tutorial.prototype.getAnswer = function(){
+
 				var that = this;
-				var interval = setInterval(function(){
-					alert('please press the right key');
-					$(document).keypress(function(event){
-						clearInterval(interval);
-						if(event.which == 97) {
-							that.keys.eq(that.array[that.curren1]).addClass('active')
-							setTimeout(function(){
-								that.keys.eq(that.array[that.curren1]).removeClass('active');
-							},1000);
-							return that.next_step();
-						}
-					});
-				},3000)	
+
+				$(document).on('keypress',function(event){
+
+					var answerCode = event.which;
+					that.userAnswered = true;
+					that.checkAnswer(answerCode);
+				});
+
+
+			}
+
+			tutorial.prototype.checkAnswer = function(charCode){
+				$(document).off('keypress');
+				if(this.userAnswered) {
+					if(charCode==97) {
+						this.keys.eq(this.array[this.curren1]).addClass('active');
+						var self = this;
+						setTimeout(function(){
+
+							self.keys.eq(self.array[self.curren1]).removeClass('active');
+
+						},500);
+						this.next_step();
+					}
+				}
 			}
 
 			tutorial.prototype.show = function() {
+
 				//add animation
 				playsong(this.bufferList[this.array[this.curren1]],0);
 				this.keys.eq(this.array[this.curren1]).addClass('active');
+
 				//remove animation
 				var self = this;
 				setTimeout(function(){
+
 					self.keys.eq(self.array[self.curren1]).removeClass('active');
+
 				},1000);
+
 				this.getAnswer();
 			};
 
@@ -323,7 +342,7 @@
 				if(this.curren1 < this.array.length){
 					
 					this.curren1++;
-					return this.show();
+					this.show();
 				}
 				return null;
 			};
