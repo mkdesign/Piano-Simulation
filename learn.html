@@ -403,7 +403,18 @@
 
 			tut = new tutorial(songNotes[0],bufferLoader.bufferList,keys,songRhythm[0],notesByKeyCode);
 
-			
+			$('p.record').click(function(){
+				
+				keys.each(function(){
+					$(this).click(function(){
+
+						var keyIndex = $(this).index();
+						recordNotes.push(keyIndex);
+						recordRythm.push(context.currentTime);
+					});
+				})
+				
+			})
 
 		})
 
