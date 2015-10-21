@@ -113,9 +113,17 @@ div.keys.minipad .key.active {
 	height: 216px;
 }
 
-div.keys div.key.black:active,
-div.keys div.key.black.active {
-	height: 123px;
+div.keys.minipad .key.correct {
+	background : linear-gradient(#44ff44,#fff);
+}
+
+div.keys.minipad .key.wrong {
+	background : linear-gradient(#ff4444,#fff);	
+}
+
+div.keys.minipad div.key.black:active,
+div.keys.minipad div.key.black.active {
+	height : 123px;
 }
 
 
@@ -273,31 +281,31 @@ div.keys div.b35{
 }
 
 div.control {
-	  background-image: url('./bg_noise.png');
-  position: absolute;
-  padding: 10px 0px 10px 20px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+	background-image: url('./bg_noise.png');
+	position        : absolute;
+	padding         : 10px 0px 10px 20px;
+	bottom          : 0;
+	left            : 0;
+	right           : 0;
 }
 
 div.control .play {
-	width: 20px;
-	height: 20px;
-	margin: 0 auto;
-	background-image: url('Play_button_arrowhead_32.png');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 27px;
-	background-color: #1f1f1f;
-	border-radius: 100%;
-	box-shadow: 0 0 10px #000 inset;
-	padding: 17px;
+	width               : 20px;
+	height              : 20px;
+	margin              : 0 auto;
+	background-image    : url('Play_button_arrowhead_32.png');
+	background-repeat   : no-repeat;
+	background-position : center;
+	background-size     : 27px;
+	background-color    : #1f1f1f;
+	border-radius       : 100%;
+	box-shadow          : 0 0 10px #000 inset;
+	padding             : 17px;
 }
 
 p{
-	font-size: 30px;
-	margin: 20px auto 0;
-	text-align: center;
-	color:#aaa;
+	font-size  : 30px;
+	margin     : 20px auto 0;
+	text-align : center;
+	color      : #aaa;
 }

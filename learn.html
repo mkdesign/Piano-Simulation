@@ -360,17 +360,27 @@
 				$(document).off('keypress');
 				if(this.userAnswered) {
 					if(charCode==this.keyCodes[this.array[this.curren1]]) {
-						this.keys.eq(this.array[this.curren1]).addClass('active');
+						this.keys.eq(this.array[this.curren1]).addClass('correct');
 						var self = this;
 						setTimeout(function(){
 
-							self.keys.eq(self.array[self.curren1]).removeClass('active');
+							self.keys.eq(self.array[self.curren1]).removeClass('correct');
 							self.next_step();
 						},500);
 						
 					}
 					else {
-						this.getAnswer();
+						var pos = notesByKeyCode.indexOf(charCode);
+						this.keys.eq(this.array[this.curren1]).addClass('correct');
+						this.keys.eq(pos).addClass('wrong');
+						var self = this;
+
+						setTimeout(function(){
+
+							self.keys.eq(self.array[self.curren1]).removeClass('correct');
+							self.keys.eq(pos).removeClass('wrong');
+							self.getAnswer();
+						},500);
 					}
 				}
 			}
@@ -398,7 +408,10 @@
 					this.curren1++;
 					this.show();
 				}
-				return ;
+
+				else {
+					return ;
+				}
 			};
 
 			tut = new tutorial(songNotes[0],bufferLoader.bufferList,keys,songRhythm[0],notesByKeyCode);
