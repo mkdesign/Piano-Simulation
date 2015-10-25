@@ -27,16 +27,18 @@
 			function adNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
-				var octave = $("#octave").val();
-				console.log(octave);
-				notes.push(new Vex.Flow.StaveNote({ keys: ["c/"+octave+""], duration: "h" }));
+				var octave = $("#octaves").val();
+				var choosedNote = $("#notes").val();
+				var durationOfNote = $("#duration").val();
+				console.log(octave,choosedNote,durationOfNote);
+				notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
 			}
 
 			// Helper function to justify and draw a 4/4 voice
 			
 
-			$("#octave").change(adNote);
+			$("#add_note").click(adNote);
 		})
 
 	</script>
@@ -48,7 +50,7 @@
 	<div class="notation">
 		<div class="choose_note">
 			<label>Choose Note :</label>
-			<select>
+			<select id="notes">
 				<option selected="selected">A</option>
 				<option>B</option>
 				<option>C</option>
@@ -60,7 +62,7 @@
 		</div>
 		<div class="choose_octave">
 			<label>Choose Octave :</label>
-			<select>
+			<select id="octaves">
 				<option selected="selected">1</option>
 				<option>2</option>
 				<option>3</option>
@@ -70,14 +72,15 @@
 		</div>
 		<div class="choose_duration">
 			<label>Choose Duration : </label>
-			<select>
-				<option selected="selected">Whole</option>
-				<option>Half</option>
-				<option>Quarter</option>
-				<option>Eighth</option>
-				<option>Sixteenth</option>
+			<select id="duration">
+				<option selected="selected"  value="w">Whole</option>
+				<option value="h">Half</option>
+				<option value="q">Quarter</option>
+				<option value="8d">Eighth</option>
+				<option value="16">Sixteenth</option>
 			</select>
 		</div>
+		<input type="button" value="Add Note" id="add_note">
 	</div>
 </body>
 </html>
