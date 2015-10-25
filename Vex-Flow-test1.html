@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-US" direction="ltr">
+<head>
+	<meta charset="utf-8" />
+	<title>First rythms</title>
+	<link rel="stylesheet" href="reset.css">
+	<!-- <link rel="stylesheet" href="style.css"> -->
+	<script src="jquery.js" ></script>
+	<script src="vexflow/releases/vexflow-min.js"></script>
+	<script src="raphael-min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			
+			var canvas = $("canvas")[0];
+			var renderer = new Vex.Flow.Renderer(canvas,
+			Vex.Flow.Renderer.Backends.CANVAS);
+
+			var ctx = renderer.getContext();
+			var stave = new Vex.Flow.Stave(10,0, 500);
+
+			// Add a treble clef
+			stave.addClef("treble");
+			stave.setContext(ctx).draw();
+
+			
+			var notes = [];
+			function adNote (){
+				ctx.clear();
+				stave.setContext(ctx).draw();
+				var octave = $("#octave").val();
+				console.log(octave);
+				notes.push(new Vex.Flow.StaveNote({ keys: ["c/"+octave+""], duration: "h" }));
+				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+			}
+
+			// Helper function to justify and draw a 4/4 voice
+			
+
+			$("#octave").change(adNote);
+		})
+
+	</script>
+</head>
+<body>
+	<canvas width="700" height="400"></canvas>
+	<select id="octave">
+		<option selected="selected">1</option>
+		<option>2</option>
+		<option>3</option>
+		<option>4</option>
+		<option>5</option>
+	</select>
+</body>
+</html>
