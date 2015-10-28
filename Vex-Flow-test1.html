@@ -24,6 +24,7 @@
 
 			
 			var notes = [];
+			var notePos = 0;
 			function adNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
@@ -33,12 +34,18 @@
 				console.log(octave,choosedNote,durationOfNote);
 				notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+				notesPos=notes[notes.length-1].getAbsoluteX();
+				console.log(notesPos);
 			}
 
 			// Helper function to justify and draw a 4/4 voice
 			
 
 			$("#add_note").click(adNote);
+
+			canvas.addEventListener('click',function(e){
+				console.log(event.clientX)
+			})
 		})
 
 	</script>
