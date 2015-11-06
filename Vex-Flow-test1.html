@@ -25,6 +25,7 @@
 			
 			var notes = [];
 			var notePos = 0;
+			var formatter;
 			function adNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
@@ -36,6 +37,9 @@
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
 				notesPos=notes[notes.length-1].getAbsoluteX();
 				console.log(notesPos);
+				var tickindex = notes[notes.length-1].ticks;
+				console.log(tickindex);
+				console.log(formatter.tContexts.map[tickIndex].x );
 			}
 
 			// Helper function to justify and draw a 4/4 voice
