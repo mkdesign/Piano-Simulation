@@ -24,8 +24,8 @@
 
 			
 			var notes = [];
-			var notePos = 0;
-			var formatter;
+			var notesPos = [];
+			var gap = 0;
 			function adNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
@@ -35,11 +35,18 @@
 				console.log(octave,choosedNote,durationOfNote);
 				notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-				notesPos=notes[notes.length-1].getAbsoluteX();
+				
+				for(i=0; i < notes.length ; i++) {
+					notesPos[i] = notes[i].getAbsoluteX();
+				}
+
+				if(notes.length>1) {
+					gap = notesPos[1]-notesPos[0];
+				}
+
 				console.log(notesPos);
-				var tickindex = notes[notes.length-1].ticks;
-				console.log(tickindex);
-				console.log(formatter.tContexts.map[tickIndex].x );
+				console.log(notesPos[5]-notesPos[4]);
+				console.log(notesPos[1]-notesPos[0]);
 			}
 
 			// Helper function to justify and draw a 4/4 voice
@@ -48,7 +55,17 @@
 			$("#add_note").click(adNote);
 
 			canvas.addEventListener('click',function(e){
-				console.log(event.clientX)
+				var mouseCord = event.clientX;
+				for(j = 0;j<notesPos.length;j++) {
+					if(mouseCord<notesPos[j] && mouseCord> notesPos[j-1]) {
+						if(mouseCord<=notesPos[j-1]+(gap/2)) {
+							alert(j-1);
+						}
+						else {
+							alert(j);
+						}
+					}
+				}
 			})
 		})
 
@@ -92,6 +109,7 @@
 			</select>
 		</div>
 		<input type="button" value="Add Note" id="add_note">
+		<button>edit</button>
 	</div>
 </body>
 </html>
