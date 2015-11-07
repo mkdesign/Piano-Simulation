@@ -26,14 +26,17 @@
 			var notes = [];
 			var notesPos = [];
 			var gap = 0;
+			var clickedNote;
+			var octave,choosedNote,durationOfNote;
 			function adNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
-				var octave = $("#octaves").val();
-				var choosedNote = $("#notes").val();
-				var durationOfNote = $("#duration").val();
+				 octave = $("#octaves").val();
+				 choosedNote = $("#notes").val();
+				 durationOfNote = $("#duration").val();
 				console.log(octave,choosedNote,durationOfNote);
 				notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
+				console.log(notes);
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
 				
 				for(i=0; i < notes.length ; i++) {
@@ -44,8 +47,8 @@
 					gap = notesPos[1]-notesPos[0];
 				}
 
-				console.log(notesPos);
-				console.log(notesPos[5]-notesPos[4]);
+				
+				console.log(notesPos[2]-notesPos[1]);
 				console.log(notesPos[1]-notesPos[0]);
 			}
 
@@ -58,15 +61,41 @@
 				var mouseCord = event.clientX;
 				for(j = 0;j<notesPos.length;j++) {
 					if(mouseCord<notesPos[j] && mouseCord> notesPos[j-1]) {
-						if(mouseCord<=notesPos[j-1]+(gap/2)) {
+						if(mouseCord<=notesPos[j-1]+((notesPos[j]-notesPos[j-1])/2)) { 
 							alert(j-1);
+							clickedNote = j-1;
 						}
 						else {
 							alert(j);
+							clickedNote = j;
 						}
 					}
 				}
 			})
+			$("#edit_note").click(editNote);
+			function editNote (){
+				ctx.clear();  // first clear in otherwise previuse notes will remain
+				stave.setContext(ctx).draw();
+				 octave = $("#octaves").val();
+				 choosedNote = $("#notes").val();
+				 durationOfNote = $("#duration").val();
+				console.log(octave,choosedNote,durationOfNote);
+				notes[clickedNote] = new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote });
+				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+				
+				for(i=0; i < notes.length ; i++) {
+					notesPos[i] = notes[i].getAbsoluteX();
+				}
+
+				if(notes.length>1) {
+					gap = notesPos[1]-notesPos[0];
+				}
+
+				
+				console.log(notesPos[5]-notesPos[4]);
+				console.log(notesPos[1]-notesPos[0]);
+				
+			}
 		})
 
 	</script>
@@ -109,7 +138,7 @@
 			</select>
 		</div>
 		<input type="button" value="Add Note" id="add_note">
-		<button>edit</button>
+		<button id="edit_note">edit</button>
 	</div>
 </body>
 </html>
