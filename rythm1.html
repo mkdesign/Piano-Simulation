@@ -270,19 +270,24 @@
 			})	
 		}
 
-		function playsong (buffer, time){
+		function playsong (buffer, time ,note, noteTime){
 			var source = context.createBufferSource();
 			source.buffer = buffer;
 			var gain = context.createGain();
 			gain.gain.value = 1;
 			source.connect(gain);
 			gain.connect(context.destination);
+	
 			source.start(time,0,1);
+			keys.eq(note).addClass('active');
+
+			var timeout = setTimeout(function(){
+				keys.eq(note).removeClass('active');
+			},noteTime);
 		}
 
 		function playrythm (bufferList){
 			var startTime = context.currentTime + 0.100;
-			alert(startTime);
 			// for(var aniDelay=0,j=1;j<songNotes[1].length;j++) {
 			// 	(function(k){
 			// 		setTimeout(function (){
@@ -304,10 +309,9 @@
 					else {
 						timeR += songRhythm[0][j];
 						timeL += songRhythm[1][j];
-						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio);
-						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
-						animateKeys(songNotes[0][j],songRhythm[0][j]);
-						animateKeys(songNotes[1][j],songRhythm[1][j]);
+						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio,songNotes[0][j],songRhythm[0][j]);
+						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio,songNotes[1][j],songRhythm[1][j]);
+
 					}
 				})(i);
 				
@@ -317,11 +321,11 @@
 		}
 
 		function animateKeys ( key, dly ){
-			// keys.eq(key).addClass('active');
+			keys.eq(key).addClass('active');
 
-			// var timeout = setTimeout(function(){
-			// 	keys.eq(key).removeClass('active');
-			// },dly);
+			var timeout = setTimeout(function(){
+				keys.eq(key).removeClass('active');
+			},dly);
 
 			// clearTimeout(timeout);
 
@@ -359,59 +363,6 @@
 					})
 				},dly)
 			}
-
-
-		}
-
-		function show(){
-
-		    var num = [0,0,0,0];
-		    var className = ['ractive','lactive','ractive','lactive'];
-
-		    var lastNoteTime =0.5+ startTime + duration[0][ duration[0].length-1 ]*zarb/tempo;
-		    noteInterval = setInterval(function(){
-
-		        var currentTime = context.currentTime;
-		        	
-		        for( var i=0; i<duration.length; i++ ){
-		        	if( currentTime > (startTime + duration[i][num[i]]*zarb/tempo) ){ 
-
-			            if( notes[i][num[i]] instanceof Array ){
-			            	for( var j=0; j<notes[i][num[i]].length; j++ ){
-			            		$key.eq( notes[i][num[i]][j] ).addClass(className[i]);
-			            	}
-			            }else{
-				            var index = notes[i][num[i]];               
-			                if(index<88){                        
-			                    $key.eq(index).addClass(className[i]);   
-			                }              
-			            }
-		                num[i]++;
-		        	}
-
-			        if( currentTime > (startTime + (duration[i][num[i]]*zarb/tempo) - 0.070) ){
-			         //    if( notes[i][num[i]-1] instanceof Array ){
-			        	// 	for( var j=0; j<notes[i][num[i]-1].length; j++ ){
-			        	// 		$key.eq( notes[i][num[i]-1][j] ).removeClass(className[i]); 
-			        	// 	}
-			        	// }else{
-			        	// 	$key.eq( notes[i][num[i]-1] ).removeClass(className[i]);      
-			        	// } 
-			        	$key.removeClass(className[i]);      
-
-			        }
-			        //*********************
-
-			        if( currentTime>lastNoteTime ){  
-			            $key.removeClass('lactive'); 
-			            $key.removeClass('ractive'); 
-			            clearInterval(noteInterval);
-			        }
-
-
-		        }
-		  
-		    }, 4);
 
 
 		}
