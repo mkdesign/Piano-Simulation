@@ -136,6 +136,7 @@ div.keys div.key.active {
 	top               : 2px;
 	height            : 135px;
 	background-color  : red;
+	outline: 2px solid red;
 }
 
 

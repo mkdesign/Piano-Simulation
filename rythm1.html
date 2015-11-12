@@ -259,7 +259,6 @@
 		}
 
 		function bufferLoadCompleted (){
-			animateTest(1);
 			var startTime = context.currentTime + 0.100;
 			var audios = bufferLoader.bufferList;
 			keys.each(function(){
@@ -270,7 +269,7 @@
 			})	
 		}
 
-		function playsong (buffer, time ,note, noteTime){
+		function playsong (buffer, time){
 			var source = context.createBufferSource();
 			source.buffer = buffer;
 			var gain = context.createGain();
@@ -279,11 +278,7 @@
 			gain.connect(context.destination);
 	
 			source.start(time,0,1);
-			keys.eq(note).addClass('active');
 
-			var timeout = setTimeout(function(){
-				keys.eq(note).removeClass('active');
-			},noteTime);
 		}
 
 		function playrythm (bufferList){
@@ -298,7 +293,8 @@
 			// 		aniDelay += songRhythm[1][k];
 			// 	})(j);
 			// }
-
+			animateTest(songNotes[0],0);
+			animateTest(songNotes[1],0);
 			for(i=1;i<songNotes[1].length ;i++){
 				(function(j){
 					if(j>songNotes[0].length){
@@ -309,8 +305,8 @@
 					else {
 						timeR += songRhythm[0][j];
 						timeL += songRhythm[1][j];
-						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio,songNotes[0][j],songRhythm[0][j]);
-						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio,songNotes[1][j],songRhythm[1][j]);
+						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio);
+						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
 
 					}
 				})(i);
@@ -319,15 +315,22 @@
 
 
 		}
-		function animateTest (i){
+		function animateTest (array,i){
 			setTimeout(function(){
-				keys.eq(i).addClass('active');
+				keys.eq(array[i]).addClass('active');
+
+				removeAnimate(array,i);
 				i++;
-				if(i<20)
-					animateTest(i);
+				if(i<array.length)
+					animateTest(array,i);
 			},500)
 		}
 
+		function removeAnimate (array,i){
+			setTimeout(function(){
+				keys.eq(array[i]).removeClass('active');
+			},500)
+		}
 		function animateKeys ( key, dly ){
 			keys.eq(key).addClass('active');
 
