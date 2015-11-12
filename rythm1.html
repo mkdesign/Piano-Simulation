@@ -293,8 +293,8 @@
 			// 		aniDelay += songRhythm[1][k];
 			// 	})(j);
 			// }
-			animateTest(songNotes[0],0);
-			animateTest(songNotes[1],0);
+			animateTest(songNotes[0],0,songRhythm[0]);
+			animateTest(songNotes[1],0,songRhythm[1]);
 			for(i=1;i<songNotes[1].length ;i++){
 				(function(j){
 					if(j>songNotes[0].length){
@@ -315,21 +315,21 @@
 
 
 		}
-		function animateTest (array,i){
+		function animateTest (array,i,time){
 			setTimeout(function(){
 				keys.eq(array[i]).addClass('active');
 
-				removeAnimate(array,i);
+				removeAnimate(array,i,time);
 				i++;
 				if(i<array.length)
-					animateTest(array,i);
-			},500)
+					animateTest(array,i,time);
+			},1)
 		}
 
-		function removeAnimate (array,i){
+		function removeAnimate (array,i,time){
 			setTimeout(function(){
 				keys.eq(array[i]).removeClass('active');
-			},500)
+			},time[i]*1000*ratio)
 		}
 		function animateKeys ( key, dly ){
 			keys.eq(key).addClass('active');
