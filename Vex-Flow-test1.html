@@ -76,9 +76,9 @@
 			function editNote (){
 				ctx.clear();  // first clear in otherwise previuse notes will remain
 				stave.setContext(ctx).draw();
-				 octave = $("#octaves").val();
-				 choosedNote = $("#notes").val();
-				 durationOfNote = $("#duration").val();
+				octave = $("#octaves").val();
+				choosedNote = $("#notes").val();
+				durationOfNote = $("#duration").val();
 				console.log(octave,choosedNote,durationOfNote);
 				notes[clickedNote] = new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote });
 				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);

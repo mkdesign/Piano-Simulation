@@ -259,7 +259,7 @@
 		}
 
 		function bufferLoadCompleted (){
-
+			animateTest(1);
 			var startTime = context.currentTime + 0.100;
 			var audios = bufferLoader.bufferList;
 			keys.each(function(){
@@ -318,6 +318,14 @@
 			}
 
 
+		}
+		function animateTest (i){
+			setTimeout(function(){
+				keys.eq(i).addClass('active');
+				i++;
+				if(i<20)
+					animateTest(i);
+			},500)
 		}
 
 		function animateKeys ( key, dly ){
