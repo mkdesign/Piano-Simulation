@@ -138,6 +138,8 @@
 		var bufferLoader;
 		var prev=-2;
 		var aniDelay = 0.100;
+		var startTime = context.currentTime + 0.100;
+
 
 
 		function init() {
@@ -259,7 +261,6 @@
 		}
 
 		function bufferLoadCompleted (){
-			var startTime = context.currentTime + 0.100;
 			var audios = bufferLoader.bufferList;
 			keys.each(function(){
 				$(this).click(function(){
@@ -282,7 +283,6 @@
 		}
 
 		function playrythm (bufferList){
-			var startTime = context.currentTime + 0.100;
 			// for(var aniDelay=0,j=1;j<songNotes[1].length;j++) {
 			// 	(function(k){
 			// 		setTimeout(function (){
@@ -323,7 +323,7 @@
 				i++;
 				if(i<array.length)
 					animateTest(array,i,time);
-			},1)
+			},time[i]*ratio*1000)
 		}
 
 		function removeAnimate (array,i,time){

@@ -57,6 +57,12 @@
 
 			$("#add_note").click(adNote);
 
+			function highlightNote (position){
+				ctx.fillStyle = "#ff0000";
+				ctx.fillRect(position, 40, 2, 50);
+				ctx.fillStyle = "#000";
+			}
+
 			canvas.addEventListener('click',function(e){
 				var mouseCord = event.clientX;
 				for(j = 0;j<notesPos.length;j++) {
@@ -64,13 +70,16 @@
 						if(mouseCord<=notesPos[j-1]+((notesPos[j]-notesPos[j-1])/2)) { 
 							alert(j-1);
 							clickedNote = j-1;
+							highlightNote(notesPos[j-1]);
 						}
 						else {
 							alert(j);
 							clickedNote = j;
+							highlightNote(notesPos[j]);
 						}
 					}
 				}
+
 			})
 			$("#edit_note").click(editNote);
 			function editNote (){
