@@ -130,7 +130,7 @@
 		var timeR = 0;
 		var timeL = 0;
 		var zarb = 60/0.25;
-		var tempo = 60;
+		var tempo = 40;
 
 		var ratio = zarb/tempo;
 
@@ -274,12 +274,11 @@
 			var source = context.createBufferSource();
 			source.buffer = buffer;
 			var gain = context.createGain();
-			gain.gain.value = 1;
+			gain.gain.value = 0.5;
 			source.connect(gain);
 			gain.connect(context.destination);
 	
 			source.start(time,0,1);
-
 		}
 
 		function playrythm (bufferList){
@@ -293,21 +292,20 @@
 			// 		aniDelay += songRhythm[1][k];
 			// 	})(j);
 			// }
-			animateTest(songNotes[0],0,songRhythm[0]);
-			animateTest(songNotes[1],0,songRhythm[1]);
+			animateTest(songNotes[0],1,songRhythm[0]);
+			animateTest(songNotes[1],1,songRhythm[1]);
 			for(i=1;i<songNotes[1].length ;i++){
 				(function(j){
 					if(j>songNotes[0].length){
 						timeL += songRhythm[1][j];
 						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
-						animateKeys(songNotes[1][j],songRhythm[1][j]);
 					}
 					else {
 						timeR += songRhythm[0][j];
 						timeL += songRhythm[1][j];
 						playsong(bufferList[ songNotes[0][j] ],startTime+timeR*ratio);
 						playsong(bufferList[ songNotes[1][j] ],startTime+timeL*ratio);
-
+						
 					}
 				})(i);
 				
@@ -323,7 +321,7 @@
 				i++;
 				if(i<array.length)
 					animateTest(array,i,time);
-			},time[i]*ratio*1000)
+			},100)
 		}
 
 		function removeAnimate (array,i,time){
