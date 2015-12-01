@@ -35,8 +35,8 @@
 				this.generateStave();
 				this.notes.push(new Vex.Flow.StaveNote({
 
-					keys: [this.userNote+"/"+this.userOctave],
-					duration: this.userNoteDuration 
+					keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
+					duration: this.userNoteDuration.val() 
 				}));
 				Vex.Flow.Formatter.FormatAndDraw(this.ctx, this.stave, this.notes);
 			};
