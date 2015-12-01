@@ -9,110 +9,129 @@
 	<script src="vexflow/releases/vexflow-min.js"></script>
 	<script src="raphael-min.js"></script>
 	<script type="text/javascript">
-			
-		document.ready = pianoComposer.generateStave();
+		$(function () {
+
 			var canvasTag = $('canvas')[0];
-			var pianoComposer = new composerClass(canvasTag);
 
-			var composerClass = function(canvas){
+			var composerClass = function(canvastag,userNote,userOctave,userNoteDuration){
 
-				this.canvas   = canvas;
-				this.renderer = new Vex.Flow.Renderer(this.canvas,
-					Vex.Flow.Renderer.Backends.CANVAS);
-
-				this.ctx      = this.renderer.getContext();
-				this.stave    = new Vex.Flow.Stave(10,0,500);
-
+				this.canvastag        = canvastag;
+				this.renderer         = new Vex.Flow.Renderer(this.canvastag , Vex.Flow.Renderer.Backends.CANVAS);
+				this.ctx              = this.renderer.getContext();
+				this.stave            = new Vex.Flow.Stave(10,0,500);
+				this.notes            = [];
+				this.userNote         = userNote.val();
+				this.userOctave       = userOctave.val();
+				this.userNoteDuration = userNoteDuration.val();
+				this.stave.addClef("treble");
 			}
 
 			composerClass.prototype.generateStave = function() {
-				this.stave.addClef("treble");
+				this.ctx.clear();
 				this.stave.setContext(this.ctx).draw();
 			};
 
+			composerClass.prototype.generateNotes = function() {
+				this.generateStave();
+				this.notes.push(new Vex.Flow.StaveNote({
 
+					keys: [this.userNote+"/"+this.userOctave],
+					duration: this.userNoteDuration 
+				}));
+				Vex.Flow.Formatter.FormatAndDraw(this.ctx, this.stave, this.notes);
+			};
+
+			var pianoComposer = new composerClass(canvasTag,$('#notes'),$('#octaves'),$('#duration'));
+			
 			var notes = [];
 			var notesPos = [];
 			var gap = 0;
 			var clickedNote;
 			var octave,choosedNote,durationOfNote;
-			function adNote (){
-				ctx.clear();  // first clear otherwise previuse notes will remain
-				stave.setContext(ctx).draw();
-				 octave = $("#octaves").val();
-				 choosedNote = $("#notes").val();
-				 durationOfNote = $("#duration").val();
-				console.log(octave,choosedNote,durationOfNote);
-				notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
-				console.log(notes);
-				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+			// function adNote (){
+			// 	ctx.clear();  // first clear in otherwise previuse notes will remain
+			// 	stave.setContext(ctx).draw();
+			// 	 octave = $("#octaves").val();
+			// 	 choosedNote = $("#notes").val();
+			// 	 durationOfNote = $("#duration").val();
+			// 	console.log(octave,choosedNote,durationOfNote);
+			// 	notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
+			// 	console.log(notes);
+			// 	Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
 				
-				for(i=0; i < notes.length ; i++) {
-					notesPos[i] = notes[i].getAbsoluteX();
-				}
+			// 	for(i=0; i < notes.length ; i++) {
+			// 		notesPos[i] = notes[i].getAbsoluteX();
+			// 	}
 
-				if(notes.length>1) {
-					gap = notesPos[1]-notesPos[0];
-				}
+			// 	if(notes.length>1) {
+			// 		gap = notesPos[1]-notesPos[0];
+			// 	}
 
 				
-				console.log(notesPos[2]-notesPos[1]);
-				console.log(notesPos[1]-notesPos[0]);
-			}
+			// 	console.log(notesPos[2]-notesPos[1]);
+			// 	console.log(notesPos[1]-notesPos[0]);
+			// }
 
 			// Helper function to justify and draw a 4/4 voice
 			
 
-			$("#add_note").click(adNote);
-
-			function highlightNote (position){
-				ctx.fillStyle = "#ff0000";
-				ctx.fillRect(position, 40, 2, 50);
-				ctx.fillStyle = "#000";
+			document.ready = function(){
+				pianoComposer.generateStave();
 			}
 
-			canvas.addEventListener('click',function(e){
-				var mouseCord = event.clientX;
-				for(j = 0;j<notesPos.length;j++) {
-					if(mouseCord<notesPos[j] && mouseCord> notesPos[j-1]) {
-						if(mouseCord<=notesPos[j-1]+((notesPos[j]-notesPos[j-1])/2)) { 
-							alert(j-1);
-							clickedNote = j-1;
-							highlightNote(notesPos[j-1]);
-						}
-						else {
-							alert(j);
-							clickedNote = j;
-							highlightNote(notesPos[j]);
-						}
-					}
-				}
-
+			$('#add_note').click(function(){
+				pianoComposer.generateNotes();
 			})
-			$("#edit_note").click(editNote);
-			function editNote (){
-				ctx.clear();  // first clear in otherwise previuse notes will remain
-				stave.setContext(ctx).draw();
-				octave = $("#octaves").val();
-				choosedNote = $("#notes").val();
-				durationOfNote = $("#duration").val();
-				console.log(octave,choosedNote,durationOfNote);
-				notes[clickedNote] = new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote });
-				Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-				
-				for(i=0; i < notes.length ; i++) {
-					notesPos[i] = notes[i].getAbsoluteX();
-				}
 
-				if(notes.length>1) {
-					gap = notesPos[1]-notesPos[0];
-				}
+			// function highlightNote (position){
+			// 	ctx.fillStyle = "#ff0000";
+			// 	ctx.fillRect(position, 40, 2, 50);
+			// 	ctx.fillStyle = "#000";
+			// }
+
+			// canvas.addEventListener('click',function(e){
+			// 	var mouseCord = event.clientX;
+			// 	for(j = 0;j<notesPos.length;j++) {
+			// 		if(mouseCord<notesPos[j] && mouseCord> notesPos[j-1]) {
+			// 			if(mouseCord<=notesPos[j-1]+((notesPos[j]-notesPos[j-1])/2)) { 
+			// 				alert(j-1);
+			// 				clickedNote = j-1;
+			// 				highlightNote(notesPos[j-1]);
+			// 			}
+			// 			else {
+			// 				alert(j);
+			// 				clickedNote = j;
+			// 				highlightNote(notesPos[j]);
+			// 			}
+			// 		}
+			// 	}
+
+			// })
+			// $("#edit_note").click(editNote);
+			// function editNote (){
+			// 	ctx.clear();  // first clear in otherwise previuse notes will remain
+			// 	stave.setContext(ctx).draw();
+			// 	octave = $("#octaves").val();
+			// 	choosedNote = $("#notes").val();
+			// 	durationOfNote = $("#duration").val();
+			// 	console.log(octave,choosedNote,durationOfNote);
+			// 	notes[clickedNote] = new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote });
+			// 	Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+				
+			// 	for(i=0; i < notes.length ; i++) {
+			// 		notesPos[i] = notes[i].getAbsoluteX();
+			// 	}
+
+			// 	if(notes.length>1) {
+			// 		gap = notesPos[1]-notesPos[0];
+			// 	}
 
 				
-				console.log(notesPos[5]-notesPos[4]);
-				console.log(notesPos[1]-notesPos[0]);
+			// 	console.log(notesPos[5]-notesPos[4]);
+			// 	console.log(notesPos[1]-notesPos[0]);
 				
-			}
+			// }
+		})
 
 	</script>
 </head>
