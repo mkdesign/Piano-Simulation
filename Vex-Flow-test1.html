@@ -13,6 +13,7 @@
 
 			var canvasTag = $('canvas')[0];
 
+			/****************************** Composer Class  ****************************/
 			var composerClass = function(canvastag,userNote,userOctave,userNoteDuration){
 
 				this.canvastag        = canvastag;
@@ -44,7 +45,13 @@
 					keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
 					duration: this.userNoteDuration.val() 
 				}));
-				Vex.Flow.Formatter.FormatAndDraw(this.ctx, this.stave, this.notes);
+			}
+
+			composerClass.prototype.editNote = function(){
+				this.notes[this.clickedNote] = new Vex.Flow.StaveNote({
+					keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
+					duration: this.userNoteDuration.val() 
+				})
 			}
 
 			composerClass.prototype.generatePositions = function() {
@@ -78,6 +85,8 @@
 			 	this.ctx.fillStyle = "#000";
 			};
 
+			/**************************  Composer Class End  *****************************/
+
 			var pianoComposer = new composerClass(canvasTag,$('#notes'),$('#octaves'),$('#duration'));
 
 			document.ready = function(){
@@ -87,8 +96,17 @@
 			$('#add_note').click(function(){
 				pianoComposer.generateStave();
 				pianoComposer.addNotes();
+				pianoComposer.generateNotes();
 				pianoComposer.generatePositions();
 			})
+
+			$('#edit_note').click(function(){
+				pianoComposer.generateStave();
+				pianoComposer.editNote();
+				pianoComposer.generateNotes();
+				pianoComposer.generatePositions();
+			})
+
 
 			$('canvas').click(function(){
 				var highlighterPosition = pianoComposer.findSelectedNote(event.clientX);
@@ -97,55 +115,6 @@
 				pianoComposer.generateNotes();
 				pianoComposer.highlighter(highlighterPosition)
 			})
-
-			// function highlightNote (position){
-			// 	ctx.fillStyle = "#ff0000";
-			// 	ctx.fillRect(position, 40, 2, 50);
-			// 	ctx.fillStyle = "#000";
-			// }
-
-			// canvas.addEventListener('click',function(e){
-			// 	var mouseCord = event.clientX;
-			// 	for(j = 0;j<notesPos.length;j++) {
-			// 		if(mouseCord<notesPos[j] && mouseCord> notesPos[j-1]) {
-			// 			if(mouseCord<=notesPos[j-1]+((notesPos[j]-notesPos[j-1])/2)) { 
-			// 				alert(j-1);
-			// 				clickedNote = j-1;
-			// 				highlightNote(notesPos[j-1]);
-			// 			}
-			// 			else {
-			// 				alert(j);
-			// 				clickedNote = j;
-			// 				highlightNote(notesPos[j]);
-			// 			}
-			// 		}
-			// 	}
-
-			// })
-			// $("#edit_note").click(editNote);
-			// function editNote (){
-			// 	ctx.clear();  // first clear in otherwise previuse notes will remain
-			// 	stave.setContext(ctx).draw();
-			// 	octave = $("#octaves").val();
-			// 	choosedNote = $("#notes").val();
-			// 	durationOfNote = $("#duration").val();
-			// 	console.log(octave,choosedNote,durationOfNote);
-			// 	notes[clickedNote] = new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote });
-			// 	Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-				
-			// 	for(i=0; i < notes.length ; i++) {
-			// 		notesPos[i] = notes[i].getAbsoluteX();
-			// 	}
-
-			// 	if(notes.length>1) {
-			// 		gap = notesPos[1]-notesPos[0];
-			// 	}
-
-				
-			// 	console.log(notesPos[5]-notesPos[4]);
-			// 	console.log(notesPos[1]-notesPos[0]);
-				
-			// }
 		})
 
 	</script>
