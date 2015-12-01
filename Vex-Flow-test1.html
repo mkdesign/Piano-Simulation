@@ -23,16 +23,17 @@
 				this.userNote         = userNote;
 				this.userOctave       = userOctave;
 				this.userNoteDuration = userNoteDuration;
+				this.notesPositions   = [];
+				this.clickedNote      = undefined;
 				this.stave.addClef("treble");
 			}
 
 			composerClass.prototype.generateStave = function() {
-				this.ctx.clear();
+				this.ctx.clear(); // first clear the context otherwise previouse notes will copy agin
 				this.stave.setContext(this.ctx).draw();
 			};
 
 			composerClass.prototype.generateNotes = function() {
-				this.generateStave();
 				this.notes.push(new Vex.Flow.StaveNote({
 
 					keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
@@ -41,46 +42,45 @@
 				Vex.Flow.Formatter.FormatAndDraw(this.ctx, this.stave, this.notes);
 			};
 
+			composerClass.prototype.generatePositions = function() {
+				for(var i=0; i<this.notes.length; i++) {
+					this.notesPositions[i] = this.notes[i].getAbsoluteX();
+				}
+				console.log(this.notesPositions[1]);
+			};
+
+			composerClass.prototype.findSelectedNote = function(click_position) {
+
+				for(var i=0; i< this.notesPositions.length; i++) {
+
+					if( click_position < this.notesPositions[i] && click_position > this.notesPositions[i-1]) {
+						if( click_position <= ( this.notesPositions[i-1] + ((this.notesPositions[i]-this.notesPositions[i-1])/2))) {
+							this.clickedNote = i-1;
+							console.log(this.clickedNote);
+						}
+						else {
+							this.clickedNote = i;
+							console.log(this.clickedNote);
+						}
+					}
+				}
+			};
+
 			var pianoComposer = new composerClass(canvasTag,$('#notes'),$('#octaves'),$('#duration'));
-			
-			var notes = [];
-			var notesPos = [];
-			var gap = 0;
-			var clickedNote;
-			var octave,choosedNote,durationOfNote;
-			// function adNote (){
-			// 	ctx.clear();  // first clear in otherwise previuse notes will remain
-			// 	stave.setContext(ctx).draw();
-			// 	 octave = $("#octaves").val();
-			// 	 choosedNote = $("#notes").val();
-			// 	 durationOfNote = $("#duration").val();
-			// 	console.log(octave,choosedNote,durationOfNote);
-			// 	notes.push(new Vex.Flow.StaveNote({ keys: [choosedNote+"/"+octave], duration: durationOfNote }));
-			// 	console.log(notes);
-			// 	Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-				
-			// 	for(i=0; i < notes.length ; i++) {
-			// 		notesPos[i] = notes[i].getAbsoluteX();
-			// 	}
-
-			// 	if(notes.length>1) {
-			// 		gap = notesPos[1]-notesPos[0];
-			// 	}
-
-				
-			// 	console.log(notesPos[2]-notesPos[1]);
-			// 	console.log(notesPos[1]-notesPos[0]);
-			// }
-
-			// Helper function to justify and draw a 4/4 voice
-			
 
 			document.ready = function(){
 				pianoComposer.generateStave();
 			}
 
 			$('#add_note').click(function(){
+				pianoComposer.generateStave();
 				pianoComposer.generateNotes();
+				pianoComposer.generatePositions();
+			})
+
+			$('canvas').click(function(){
+				pianoComposer.findSelectedNote(event.clientX);
+				console.log(event.clientX);
 			})
 
 			// function highlightNote (position){
