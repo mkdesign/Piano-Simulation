@@ -20,9 +20,9 @@
 				this.ctx              = this.renderer.getContext();
 				this.stave            = new Vex.Flow.Stave(10,0,500);
 				this.notes            = [];
-				this.userNote         = userNote.val();
-				this.userOctave       = userOctave.val();
-				this.userNoteDuration = userNoteDuration.val();
+				this.userNote         = userNote;
+				this.userOctave       = userOctave;
+				this.userNoteDuration = userNoteDuration;
 				this.stave.addClef("treble");
 			}
 
