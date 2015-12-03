@@ -48,7 +48,6 @@ composerClass.prototype.generatePositions = function() {
 	for(var i=0; i<this.notes.length; i++) {
 		this.notesPositions[i] = this.notes[i].getAbsoluteX();
 	}
-
 };
 
 composerClass.prototype.findSelectedNote = function(click_position) {
