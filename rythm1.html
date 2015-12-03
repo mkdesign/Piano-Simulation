@@ -151,164 +151,93 @@
 		var keys = $('.keys').find('.key');
 		var prev=-2;
 
-		function init() {
-		    try {
-		    	window.AudioContext = window.AudioContext || window.webkitAudioContext;
-		        context = new AudioContext();
+		soundFiles = [
+			'../piano/sound/A0.mp3','../piano/sound/Bb0.mp3','../piano/sound/B0.mp3','../piano/sound/C1.mp3','../piano/sound/Db1.mp3','../piano/sound/D1.mp3','../piano/sound/Eb1.mp3','../piano/sound/E1.mp3','../piano/sound/F1.mp3','../piano/sound/Gb1.mp3','../piano/sound/G1.mp3','../piano/sound/Ab1.mp3','../piano/sound/A1.mp3','../piano/sound/Bb1.mp3','../piano/sound/B1.mp3','../piano/sound/C2.mp3','../piano/sound/Db2.mp3','../piano/sound/D2.mp3','../piano/sound/Eb2.mp3','../piano/sound/E2.mp3','../piano/sound/F2.mp3','../piano/sound/Gb2.mp3','../piano/sound/G2.mp3','../piano/sound/Ab2.mp3','../piano/sound/A2.mp3','../piano/sound/Bb2.mp3','../piano/sound/B2.mp3','../piano/sound/C3.mp3','../piano/sound/Db3.mp3','../piano/sound/D3.mp3','../piano/sound/Eb3.mp3','../piano/sound/E3.mp3','../piano/sound/F3.mp3','../piano/sound/Gb3.mp3','../piano/sound/G3.mp3','../piano/sound/Ab3.mp3','../piano/sound/A3.mp3','../piano/sound/Bb3.mp3','../piano/sound/B3.mp3','../piano/sound/C4.mp3','../piano/sound/Db4.mp3','../piano/sound/D4.mp3','../piano/sound/Eb4.mp3','../piano/sound/E4.mp3','../piano/sound/F4.mp3','../piano/sound/Gb4.mp3','../piano/sound/G4.mp3','../piano/sound/Ab4.mp3','../piano/sound/A4.mp3','../piano/sound/Bb4.mp3','../piano/sound/B4.mp3','../piano/sound/C5.mp3','../piano/sound/Db5.mp3','../piano/sound/D5.mp3','../piano/sound/Eb5.mp3','../piano/sound/E5.mp3','../piano/sound/F5.mp3','../piano/sound/Gb5.mp3','../piano/sound/G5.mp3','../piano/sound/Ab5.mp3','../piano/sound/A5.mp3','../piano/sound/Bb5.mp3','../piano/sound/B5.mp3','../piano/sound/C6.mp3','../piano/sound/Db6.mp3','../piano/sound/D6.mp3','../piano/sound/Eb6.mp3','../piano/sound/E6.mp3','../piano/sound/F6.mp3','../piano/sound/Gb6.mp3','../piano/sound/G6.mp3','../piano/sound/Ab6.mp3','../piano/sound/A6.mp3','../piano/sound/Bb6.mp3','../piano/sound/B6.mp3','../piano/sound/C7.mp3','../piano/sound/Db7.mp3','../piano/sound/D7.mp3','../piano/sound/Eb7.mp3','../piano/sound/E7.mp3','../piano/sound/F7.mp3','../piano/sound/Gb7.mp3','../piano/sound/G7.mp3','../piano/sound/Ab7.mp3','../piano/sound/A7.mp3','../piano/sound/Bb7.mp3','../piano/sound/B7.mp3','../piano/sound/C8.mp3', '../piano/sound/silence.wav'
+		]
+
+		var instrumentGenerator = function(soundUrl){
+			this.context;
+			this.bufferLoader;
+			this.soundUrl = soundUrl;
+		}
+
+		instrumentGenerator.prototype.bufferLoaderGenerator = function(callbackFunction) {
+			try {
+		        this.context = new AudioContext();
 		    }
 		    catch(e) {
 		        alert("Web Audio API is not supported in this browser");
 		    }
-		    
-		    // Start loading the drum kit.
-		    bufferLoader = new BufferLoader(
-		        context,
-		        [
-					'../piano/sound/A0.mp3',
-					'../piano/sound/Bb0.mp3',
-					'../piano/sound/B0.mp3',
+			this.bufferLoader = new BufferLoader(this.context,this.soundUrl,callbackFunction);
+			this.bufferLoader.load();
+		};
 
-					'../piano/sound/C1.mp3',
-					'../piano/sound/Db1.mp3',
-					'../piano/sound/D1.mp3',
-					'../piano/sound/Eb1.mp3',
-					'../piano/sound/E1.mp3',
-					'../piano/sound/F1.mp3',
-					'../piano/sound/Gb1.mp3',
-					'../piano/sound/G1.mp3',
-					'../piano/sound/Ab1.mp3',
-					'../piano/sound/A1.mp3',
-					'../piano/sound/Bb1.mp3',
-					'../piano/sound/B1.mp3',
+		instrumentGenerator.prototype.playSong = function(keyIndex, timeToPlay){
+			var source      = this.context.createBufferSource();
 
-					'../piano/sound/C2.mp3',
-					'../piano/sound/Db2.mp3',
-					'../piano/sound/D2.mp3',
-					'../piano/sound/Eb2.mp3',
-					'../piano/sound/E2.mp3',
-					'../piano/sound/F2.mp3',
-					'../piano/sound/Gb2.mp3',
-					'../piano/sound/G2.mp3',
-					'../piano/sound/Ab2.mp3',
-					'../piano/sound/A2.mp3',
-					'../piano/sound/Bb2.mp3',
-					'../piano/sound/B2.mp3',
+			source.buffer   = this.bufferLoader.bufferList[keyIndex];
 
-					'../piano/sound/C3.mp3',
-					'../piano/sound/Db3.mp3',
-					'../piano/sound/D3.mp3',
-					'../piano/sound/Eb3.mp3',
-					'../piano/sound/E3.mp3',
-					'../piano/sound/F3.mp3',
-					'../piano/sound/Gb3.mp3',
-					'../piano/sound/G3.mp3',
-					'../piano/sound/Ab3.mp3',
-					'../piano/sound/A3.mp3',
-					'../piano/sound/Bb3.mp3',
-					'../piano/sound/B3.mp3',
+			var gain        = this.context.createGain();
+			gain.gain.value = 1;
 
-					'../piano/sound/C4.mp3',
-					'../piano/sound/Db4.mp3',
-					'../piano/sound/D4.mp3',
-					'../piano/sound/Eb4.mp3',
-					'../piano/sound/E4.mp3',
-					'../piano/sound/F4.mp3',
-					'../piano/sound/Gb4.mp3',
-					'../piano/sound/G4.mp3',
-					'../piano/sound/Ab4.mp3',
-					'../piano/sound/A4.mp3',
-					'../piano/sound/Bb4.mp3',
-					'../piano/sound/B4.mp3',
+			source.connect(gain);
+			gain.connect(this.context.destination);
 
-					'../piano/sound/C5.mp3',
-					'../piano/sound/Db5.mp3',
-					'../piano/sound/D5.mp3',
-					'../piano/sound/Eb5.mp3',
-					'../piano/sound/E5.mp3',
-					'../piano/sound/F5.mp3',
-					'../piano/sound/Gb5.mp3',
-					'../piano/sound/G5.mp3',
-					'../piano/sound/Ab5.mp3',
-					'../piano/sound/A5.mp3',
-					'../piano/sound/Bb5.mp3',
-					'../piano/sound/B5.mp3',
-
-					'../piano/sound/C6.mp3',
-					'../piano/sound/Db6.mp3',
-					'../piano/sound/D6.mp3',
-					'../piano/sound/Eb6.mp3',
-					'../piano/sound/E6.mp3',
-					'../piano/sound/F6.mp3',
-					'../piano/sound/Gb6.mp3',
-					'../piano/sound/G6.mp3',
-					'../piano/sound/Ab6.mp3',
-					'../piano/sound/A6.mp3',
-					'../piano/sound/Bb6.mp3',
-					'../piano/sound/B6.mp3',
-
-					'../piano/sound/C7.mp3',
-					'../piano/sound/Db7.mp3',
-					'../piano/sound/D7.mp3',
-					'../piano/sound/Eb7.mp3',
-					'../piano/sound/E7.mp3',
-					'../piano/sound/F7.mp3',
-					'../piano/sound/Gb7.mp3',
-					'../piano/sound/G7.mp3',
-					'../piano/sound/Ab7.mp3',
-					'../piano/sound/A7.mp3',
-					'../piano/sound/Bb7.mp3',
-					'../piano/sound/B7.mp3',
-
-					'../piano/sound/C8.mp3',
-
-					 '../piano/sound/silence.wav',
-		        ],
-		        bufferLoadCompleted  
-		    );
-
-		    bufferLoader.load();
+			source.start(timeToPlay);	
 		}
 
-		init();
-		var startTime = context.currentTime + 0.100;
+		instrumentGenerator.prototype.playNotes = function(notesArray, timeToPlay) {
+		    for( var i=0; i<notesArray.length; i++ ){
+		        playSong(this.bufferLoader.bufferList[ notesArray[i] ], timeToPlay );
+		    }	
+		};
+		
+		var pianoGenerator = new instrumentGenerator(soundFiles);
+		window.onload = init();
+		function init(){
+			
+			pianoGenerator.bufferLoaderGenerator(bufferLoadCompleted);
+		}
+
 
 		function bufferLoadCompleted (){
-			 bufferList = bufferLoader.bufferList;
+			alert(1);
+			// bufferList = bufferLoader.bufferList;
 			keys.each(function(){
 				$(this).click(function(){
 					var keyIndex = $(this).index();
-					playsong(audios[keyIndex],startTime);
+					pianoGenerator.playSong(keyIndex,0)
 				})
 			})	
 		}
 
-		function playsong (buffer, time,key){
-			var source = context.createBufferSource();
-			source.buffer = buffer;
-			var gain = context.createGain();
-			gain.gain.value = 0.5;
-			source.connect(gain);
-			gain.connect(context.destination);
-			source.start(time,0);
-			// setTimeout(function () {
-			// 	keys.eq(key).addClass('active');
+		// function playsong (buffer, time,key){
+		// 	var source = context.createBufferSource();
+		// 	source.buffer = buffer;
+		// 	var gain = context.createGain();
+		// 	gain.gain.value = 0.5;
+		// 	source.connect(gain);
+		// 	gain.connect(context.destination);
+		// 	source.start(time,0);
+		// 	// setTimeout(function () {
+		// 	// 	keys.eq(key).addClass('active');
 
-			// },time*1000)
-			// source.onended = function(){
-			// 	keys.eq(key).removeClass('active');
-			// }
-		}
+		// 	// },time*1000)
+		// 	// source.onended = function(){
+		// 	// 	keys.eq(key).removeClass('active');
+		// 	// }
+		// }
 
-		function playNotes(note,timeToPlay){
-		    if( note instanceof Array ){
-		    	for( var i=0; i<note.length; i++ ){
-		        	playsong(bufferList[ note[i] ], timeToPlay );
-		    	}        
-		    }else{        	
-		        playsong(bufferList[ note ], timeToPlay ); 
-		    } 
-		}
-
+		// function playNotes(note,timeToPlay){
+		//     if( note instanceof Array ){
+		//     	for( var i=0; i<note.length; i++ ){
+		//         	playsong(bufferList[ note[i] ], timeToPlay );
+		//     	}        
+		//     }else{        	
+		//         playsong(bufferList[ note ], timeToPlay ); 
+		//     } 
+		// }
+		
 		function playrythm (bufferList){
 			for( var i=0; i<songNotes.length; i++ ){
 		    	notes[i] = songNotes[i].concat();
@@ -331,16 +260,6 @@
 		    animateKeys(notes[0],1,songRhythm[0]);
 		    animateKeys(notes[1],1,songRhythm[1]);
 		    
-
-			// for(j=1;j<songNotesR.length ;j++){
-
-			// 	timeR += songRhythmR[j];
-			// 	timeL += songRhythmL[j];
-			// 	playsong(bufferList[ songNotesR[j] ],timeR*ratio, songNotesR[j]);
-			// 	playsong(bufferList[ songNotesL[j] ],timeL*ratio, songNotesL[j]);
-			// }
-			// animateKeys(songNotesR,1,songRhythmR);
-			// animateKeys(songNotesL,1,songRhythmL);
 		}
 		var animateArrayTime = 0;
 		function animateKeys (array,i,time){
