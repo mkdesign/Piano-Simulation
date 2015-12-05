@@ -41,6 +41,19 @@
 				pianoComposer.generateNotes();
 				pianoComposer.highlighter();
 			})
+
+			$('#cursor_animate').click(function(){
+				for(var i=0; i<3; i++) {
+					(function(j){
+						setTimeout(function(){
+							pianoComposer.generateStave();
+							pianoComposer.generateNotes();
+							pianoComposer.highlighter(j);
+						},500*j)
+					})(i);
+				}
+			})
+
 		})
 
 	</script>
@@ -84,6 +97,7 @@
 		</div>
 		<input type="button" value="Add Note" id="add_note">
 		<button id="edit_note">edit</button>
+		<button id="cursor_animate">cursor</button>
 	</div>
 </body>
 </html>

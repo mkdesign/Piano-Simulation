@@ -5,10 +5,10 @@ var composerClass = function(canvastag,userNote,userOctave,userNoteDuration){
 	this.ctx              = this.renderer.getContext();
 	this.stave            = new Vex.Flow.Stave(10,0,500);
 	this.notes            = [];
-	this.userNote         = userNote;
-	this.userOctave       = userOctave;
-	this.userNoteDuration = userNoteDuration;
-	this.notesPositions   = [];
+	this.userNote         = userNote; // user input for notes
+	this.userOctave       = userOctave;// user input for note's octave
+	this.userNoteDuration = userNoteDuration;//user input for note duration
+	this.notesPositions   = []; // all notes' positions
 	this.clickedNote      = undefined;
 	this.stave.addClef("treble");
 }
@@ -67,8 +67,15 @@ composerClass.prototype.findSelectedNote = function(click_position) {
 	return this.clickedNote;
 };
 
-composerClass.prototype.highlighter = function() {
-	var position = this.notesPositions[this.clickedNote];
+composerClass.prototype.highlighter = function(cursorPosition) {
+	if(cursorPosition==undefined) {
+		var position = this.notesPositions[this.clickedNote];
+	}
+
+	else {
+		console.log(cursorPosition);
+		var position = this.notesPositions[cursorPosition];
+	}	
 	this.ctx.fillStyle = "#ff0000";
  	this.ctx.fillRect(position-10, 40, 4, 40);
  	this.ctx.fillStyle = "#000";
