@@ -310,3 +310,7 @@ p{
 	text-align : center;
 	color      : #aaa;
 }
+
+canvas {
+	background-color: white;
+}
