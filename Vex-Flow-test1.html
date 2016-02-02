@@ -18,94 +18,94 @@
 	<div class="keys composer_keyboard">
 
 		<div class="key"></div>
-		<!-- <div class="key black b0"></div> -->
+		<div class="key black b0"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b1"></div> -->
-		<div class="key"></div>
-		<div class="key"></div>
-		<!-- <div class="key black b2"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b3"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b4"></div> -->
-		<div class="key"></div>
-
-		<div class="key"></div>
-		<!-- <div class="key black b5"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b6"></div> -->
+		<div class="key black b1"></div>
 		<div class="key"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b7"></div> -->
+		<div class="key black b2"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b8"></div> -->
+		<div class="key black b3"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b9"></div> -->
+		<div class="key black b4"></div>
 		<div class="key"></div>
 
 		<div class="key"></div>
-		<!-- <div class="key black b10"></div> -->
+		<div class="key black b5"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b11"></div> -->
-		<div class="key"></div>
-		<div class="key"></div>
-		<!-- <div class="key black b12"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b13"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b14"></div> -->
-		<div class="key"></div>
-
-		<div class="key"></div>
-		<!-- <div class="key black b15"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b16"></div> -->
+		<div class="key black b6"></div>
 		<div class="key"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b17"></div> -->
+		<div class="key black b7"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b18"></div> -->
+		<div class="key black b8"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b19"></div> -->
+		<div class="key black b9"></div>
 		<div class="key"></div>
 
 		<div class="key"></div>
-		<!-- <div class="key black b20"></div> -->
+		<div class="key black b10"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b21"></div> -->
-		<div class="key"></div>
-		<div class="key"></div>
-		<!-- <div class="key black b22"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b23"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b24"></div> -->
-		<div class="key"></div>
-
-		<div class="key"></div>
-		<!-- <div class="key black b25"></div> -->
-		<div class="key"></div>
-		<!-- <div class="key black b26"></div> -->
+		<div class="key black b11"></div>
 		<div class="key"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b27"></div> -->
+		<div class="key black b12"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b28"></div> -->
+		<div class="key black b13"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b29"></div> -->
+		<div class="key black b14"></div>
 		<div class="key"></div>
 
 		<div class="key"></div>
-		<!-- <div class="key black b30"></div> -->
+		<div class="key black b15"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b31"></div> -->
+		<div class="key black b16"></div>
 		<div class="key"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b32"></div> -->
+		<div class="key black b17"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b33"></div> -->
+		<div class="key black b18"></div>
 		<div class="key"></div>
-		<!-- <div class="key black b34"></div> -->
+		<div class="key black b19"></div>
+		<div class="key"></div>
+
+		<div class="key"></div>
+		<div class="key black b20"></div>
+		<div class="key"></div>
+		<div class="key black b21"></div>
+		<div class="key"></div>
+		<div class="key"></div>
+		<div class="key black b22"></div>
+		<div class="key"></div>
+		<div class="key black b23"></div>
+		<div class="key"></div>
+		<div class="key black b24"></div>
+		<div class="key"></div>
+
+		<div class="key"></div>
+		<div class="key black b25"></div>
+		<div class="key"></div>
+		<div class="key black b26"></div>
+		<div class="key"></div>
+		<div class="key"></div>
+		<div class="key black b27"></div>
+		<div class="key"></div>
+		<div class="key black b28"></div>
+		<div class="key"></div>
+		<div class="key black b29"></div>
+		<div class="key"></div>
+
+		<div class="key"></div>
+		<div class="key black b30"></div>
+		<div class="key"></div>
+		<div class="key black b31"></div>
+		<div class="key"></div>
+		<div class="key"></div>
+		<div class="key black b32"></div>
+		<div class="key"></div>
+		<div class="key black b33"></div>
+		<div class="key"></div>
+		<div class="key black b34"></div>
 		<div class="key"></div>
 		<div class="key"></div>
 
@@ -123,6 +123,7 @@
 			<label>Choose Note :</label>
 			<select id="notes">
 				<option selected="selected">A</option>
+				<option>A#</option>
 				<option>B</option>
 				<option>C</option>
 				<option>C#</option>
@@ -201,15 +202,24 @@
 				var prg = $('select#notes').val();
 				var choosednote;
 				if(prg == 'A') {
-					choosednote = 1;
+					choosednote = 10;
+				}
+				if(prg == 'A#') {
+					choosednote = 11;
 				}
 				else if (prg == 'B') {
-					choosednote = 2;
+					choosednote = 12;
 				}
 				else if (prg == 'C') {
-					choosednote = 3;
+					choosednote = 1;
+				}
+				else if (prg == 'C#') {
+					choosednote = 2;
 				}
 				else if (prg == 'D') {
+					choosednote = 3;
+				}
+				else if (prg == 'D#') {
 					choosednote = 4;
 				}
 				else if (prg == 'E') {
@@ -218,8 +228,14 @@
 				else if (prg == 'F') {
 					choosednote = 6;
 				}
-				else if (prg == 'G') {
+				else if (prg == 'F#') {
 					choosednote = 7;
+				}
+				else if (prg == 'G') {
+					choosednote = 8;
+				}
+				else if (prg == 'G#') {
+					choosednote = 9;
 				}
 
 				var octavevalue = $('select#octaves').val();
