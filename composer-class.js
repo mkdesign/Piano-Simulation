@@ -24,11 +24,27 @@ composerClass.prototype.generateNotes = function() {
 };
 
 composerClass.prototype.addNotes = function(){
-	this.notes.push(new Vex.Flow.StaveNote({
+	console.log(this.userNote.val());
+	if(this.userNote.val() == 'C#') {
+		this.notes.push(new Vex.Flow.StaveNote({
 
-		keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
-		duration: this.userNoteDuration.val() 
-	}));
+			keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
+			duration: this.userNoteDuration.val(),
+
+		}).addAccidental(0, new Vex.Flow.Accidental("#"))
+
+		);
+	}
+	else {
+		this.notes.push(new Vex.Flow.StaveNote({
+
+			keys: [ this.userNote.val() +"/"+ this.userOctave.val() ],
+			duration: this.userNoteDuration.val(),
+
+		}));
+	}
+
+	
 
 	this.clickedNote = undefined;
 }

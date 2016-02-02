@@ -19,6 +19,7 @@ instrumentGenerator.prototype.bufferLoaderGenerator = function(callbackFunction)
 };
 
 instrumentGenerator.prototype.playSong = function(buffer, timeToPlay){
+	console.log(timeToPlay);
 	var source      = this.context.createBufferSource();
 	source.buffer   = buffer;
 
@@ -65,6 +66,7 @@ instrumentGenerator.prototype.playRythms = function(songNotesArray,songRhythmsAr
 }
 
 instrumentGenerator.prototype.keyAnimate = function(array,i,time){
+	var keys = $('.keys').find('.key');
 	var that = this;
 	setTimeout(function(){
 		if(array[i]<88)
@@ -80,6 +82,7 @@ instrumentGenerator.prototype.keyAnimate = function(array,i,time){
 }
 
 instrumentGenerator.prototype.removeKeyAnimate = function(array,i,time){
+	var keys = $('.keys').find('.key');
 	var that = this;
 	setTimeout(function(){
 		keys.eq(array[i]).removeClass('active');
