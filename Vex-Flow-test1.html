@@ -169,8 +169,8 @@
 			var soundFiles = [
 				'../piano/sound/A0.mp3','../piano/sound/Bb0.mp3','../piano/sound/B0.mp3','../piano/sound/C1.mp3','../piano/sound/Db1.mp3','../piano/sound/D1.mp3','../piano/sound/Eb1.mp3','../piano/sound/E1.mp3','../piano/sound/F1.mp3','../piano/sound/Gb1.mp3','../piano/sound/G1.mp3','../piano/sound/Ab1.mp3','../piano/sound/A1.mp3','../piano/sound/Bb1.mp3','../piano/sound/B1.mp3','../piano/sound/C2.mp3','../piano/sound/Db2.mp3','../piano/sound/D2.mp3','../piano/sound/Eb2.mp3','../piano/sound/E2.mp3','../piano/sound/F2.mp3','../piano/sound/Gb2.mp3','../piano/sound/G2.mp3','../piano/sound/Ab2.mp3','../piano/sound/A2.mp3','../piano/sound/Bb2.mp3','../piano/sound/B2.mp3','../piano/sound/C3.mp3','../piano/sound/Db3.mp3','../piano/sound/D3.mp3','../piano/sound/Eb3.mp3','../piano/sound/E3.mp3','../piano/sound/F3.mp3','../piano/sound/Gb3.mp3','../piano/sound/G3.mp3','../piano/sound/Ab3.mp3','../piano/sound/A3.mp3','../piano/sound/Bb3.mp3','../piano/sound/B3.mp3','../piano/sound/C4.mp3','../piano/sound/Db4.mp3','../piano/sound/D4.mp3','../piano/sound/Eb4.mp3','../piano/sound/E4.mp3','../piano/sound/F4.mp3','../piano/sound/Gb4.mp3','../piano/sound/G4.mp3','../piano/sound/Ab4.mp3','../piano/sound/A4.mp3','../piano/sound/Bb4.mp3','../piano/sound/B4.mp3','../piano/sound/C5.mp3','../piano/sound/Db5.mp3','../piano/sound/D5.mp3','../piano/sound/Eb5.mp3','../piano/sound/E5.mp3','../piano/sound/F5.mp3','../piano/sound/Gb5.mp3','../piano/sound/G5.mp3','../piano/sound/Ab5.mp3','../piano/sound/A5.mp3','../piano/sound/Bb5.mp3','../piano/sound/B5.mp3','../piano/sound/C6.mp3','../piano/sound/Db6.mp3','../piano/sound/D6.mp3','../piano/sound/Eb6.mp3','../piano/sound/E6.mp3','../piano/sound/F6.mp3','../piano/sound/Gb6.mp3','../piano/sound/G6.mp3','../piano/sound/Ab6.mp3','../piano/sound/A6.mp3','../piano/sound/Bb6.mp3','../piano/sound/B6.mp3','../piano/sound/C7.mp3','../piano/sound/Db7.mp3','../piano/sound/D7.mp3','../piano/sound/Eb7.mp3','../piano/sound/E7.mp3','../piano/sound/F7.mp3','../piano/sound/Gb7.mp3','../piano/sound/G7.mp3','../piano/sound/Ab7.mp3','../piano/sound/A7.mp3','../piano/sound/Bb7.mp3','../piano/sound/B7.mp3','../piano/sound/C8.mp3', '../piano/sound/silence.wav'
 			]
-			songNotes[0]=[49,47,46,47,44,52];
-			songRhythm[0]=[0.0625,0.0625,0.0625,0.0625,0.125,0.125];
+			songNotes[0]=[];
+			songRhythm[0]=[];
 
 
 			var pianoGenerator = new instrumentGenerator(soundFiles);
@@ -276,24 +276,38 @@
 				pianoComposer.highlighter();
 			})
 
-			$('#cursor_animate').click(function(){
-				for(var i=0; i<3; i++) {
+			var staveCursor = function(){
+				var duration = [];
+				for(var i=0; i<songRhythm[0].length; i++) {
+					duration[i] = songRhythm[0][i];
+					
+
+				}
+				for(var i=1; i<duration.length; i++) {
+					duration[i] = duration[i-1] + duration[i];
+					console.log(duration[i])
+				}
+
+				for(var i=0; i<duration.length; i++) {
 					(function(j){
 						setTimeout(function(){
 							pianoComposer.generateStave();
 							pianoComposer.generateNotes();
 							pianoComposer.highlighter(j);
-						},songRhythm[0][j]*j)
+						},duration[j]*4000)
 					})(i);
 				}
-			})
+			}
 			$('.play').click(function(){
 				var newNotes = [],
 					newRythms = [];
+
 				newNotes[0]  = songNotes[0].concat();
 				newRythms[0] = songRhythm[0].concat();
+
 				pianoGenerator.playRythms(newNotes,newRythms);
-				pianoGenerator.keyAnimate(songNotes[0],0,songRhythm[0])
+				staveCursor();
+				// pianoGenerator.keyAnimate(songNotes[0],0,songRhythm[0])
 			})
 
 		
