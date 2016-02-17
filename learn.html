@@ -143,6 +143,7 @@
 		<div class="clear"></div>
 	</div>
 	<p class="record">Run</p>
+	<p class="play_record">play recorded</p>
 	<div class="control">
 		<div class="play" onclick="tut.show();"></div>
 	</div>
@@ -178,7 +179,7 @@
 			var aniDelay = 0.100;
 			var notesByKeyCode = [113,49,119,101,50,114,51,116,121,52,117,53,105,54,97,115,55,100,56,102,103,57,104,48,106,45,107];
 			//var keysOnKeyboard = [q,'1',w,e,'2',r,'3',t,y,'4',u,'5',i,'6',a,s,'7',d,'8',f,g,'9',h,'0',j,'-',k];
-
+			var bufferList = bufferLoader.bufferList;
 			function init() {
 			    try {
 			        context = new AudioContext();
@@ -326,7 +327,7 @@
 				gain.gain.value = 1;
 				source.connect(gain);
 				gain.connect(context.destination);
-				source.start(time,0,1);
+				source.start(context.currentTime+time,0,1);
 			}
 
 			
@@ -428,6 +429,18 @@
 				})
 				
 			})
+
+			$('p.play_record').click(function(){
+				alert(recordNotes.length);
+				console.log(recordRythm);
+				if(recordNotes.length) {
+					for(var i=0; i<recordNotes.length; i++) {
+						alert(i+' '+ recordRythm[i]);
+						playsong(bufferList[recordNotes[i]],recordRythm[i]);
+					}
+				}
+			})
+
 
 		})
 

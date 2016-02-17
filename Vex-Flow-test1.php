@@ -1,3 +1,35 @@
+<?php
+	if( isset($_POST['notes']) )
+	{
+		$notes = $_POST['notes'];
+		if( is_string($notes) )
+		{
+			$fileName = md5(time().rand(1,255)).".txt";
+			file_put_contents($fileName, $notes);
+
+			header('Content-Type: application/octet-stream');
+		    header('Content-Disposition: attachment; filename='.basename($fileName));
+		    header('Expires: 0');
+		    header('Cache-Control: must-revalidate');
+		    header('Pragma: public');
+		    header('Content-Length: ' . filesize($fileName));
+		    readfile($fileName);
+
+		}
+	} else if( isset($_FILES['textfile']) )
+	{
+		var_dump($_FILES);
+		$target_file = basename($_FILES["textfile"]["name"]);
+		if (move_uploaded_file($_FILES["textfile"]["tmp_name"], $target_file)) {
+	        echo "The file ". basename( $_FILES["textfile"]["name"]). " has been uploaded.";
+	    	$ustring = file_get_contents($target_file);
+	    } else {
+	        echo "Sorry, there was an error uploading your file.";
+	    }
+	}
+?>
+
+
 <!doctype html>
 <html lang="en-US" direction="ltr">
 <head>
@@ -158,11 +190,17 @@
 		</div>
 		<input type="button" value="Add Note" id="add_note">
 		<button id="edit_note">edit</button>
-		<button id="cursor_animate">cursor</button>9
+		<button id="cursor_animate">cursor</button>
+		<form action='' method='POST'>
+			<button id="download">Downlaod</button>
+		</form>
+		<form action='' method='POST' enctype="multipart/form-data">
+			<input type='file' name='textfile'/>
+			<br/>
+			<input type='submit' value='Upload File'/>
+		</form>
 	</div>
-	<form >
-		<input type="submit" value='Get Notes'/>
-	</form>
+
 	<script type="text/javascript">
 		
 			var songNotes=[];
@@ -181,9 +219,9 @@
 			var canvasTag = $('canvas')[0];
 
 			var pianoComposer = new composerClass(canvasTag,$('#notes'),$('#octaves'),$('#duration'));
-
+			var uploaded_flag = false;
 			document.ready = function(){
-				pianoComposer.generateStave();
+				if(!uploaded_flag) pianoComposer.generateStave();
 				pianoGenerator.bufferLoaderGenerator(bufferLoadCompleted);
 			}
 
@@ -313,7 +351,49 @@
 				// pianoGenerator.keyAnimate(songNotes[0],0,songRhythm[0])
 			})
 
-		
+			$('#download').click(function(){
+				pianoComposer.generateInput();
+			})
+			var upload_files_keys = <?php echo (isset($ustring))?$ustring:"' '"  ?>;
+
+			(function () {
+				var upload_octave,
+					upload_note,
+					upload_duration;
+
+				if(upload_files_keys instanceof Array) {
+					uploaded_flag= true;
+					for(var i =0;i<upload_files_keys.length;i++) {
+						upload_note     = upload_files_keys[i][0].charAt(0);
+						upload_octave   = upload_files_keys[i][0].charAt(2);
+						upload_duration = upload_files_keys[i][1];
+
+
+						if(upload_files_keys[i].length < 3) {
+							
+							$('#notes').val(upload_note);
+							$('#octaves').val(upload_octave);
+							$('#duration').val(upload_duration);
+							pianoComposer.generateStave();
+							pianoComposer.addNotes();
+							pianoComposer.generateNotes();
+							pianoComposer.generatePositions();
+
+						}
+						else {
+							$('#notes').val(upload_note+'#');
+							$('#octaves').val(upload_octave);
+							$('#duration').val(upload_duration);
+							pianoComposer.generateStave();
+							pianoComposer.addNotes();
+							pianoComposer.generateNotes();
+							pianoComposer.generatePositions();
+						}
+
+					}
+				}
+			})();
+
 
 	</script>
 </body>

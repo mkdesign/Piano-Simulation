@@ -29,7 +29,7 @@ instrumentGenerator.prototype.playSong = function(buffer, timeToPlay){
 	source.connect(gain);
 	gain.connect(this.context.destination);
 
-	source.start(timeToPlay,0,1);	
+	source.start(this.context.currentTime+timeToPlay,0,1);	
 }
 
 instrumentGenerator.prototype.playNotes = function(notesArray, timeToPlay) {

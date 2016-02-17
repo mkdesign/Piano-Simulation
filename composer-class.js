@@ -19,8 +19,8 @@ composerClass.prototype.generateStave = function() {
 };
 
 composerClass.prototype.generateNotes = function() {
-	
 	Vex.Flow.Formatter.FormatAndDraw(this.ctx, this.stave, this.notes);
+
 };
 
 composerClass.prototype.addNotes = function(){
@@ -96,4 +96,25 @@ composerClass.prototype.highlighter = function(cursorPosition) {
 	this.ctx.fillStyle = "#ff0000";
  	this.ctx.fillRect(position-10, 40, 4, 40);
  	this.ctx.fillStyle = "#000";
+};
+
+composerClass.prototype.generateInput = function() {
+	var key = [];
+	$.each(this.notes, function() {
+		
+		if( "modifiers" in this ) {
+			if(this["modifiers"].length > 0 )
+			{
+				
+				key.push( [this['keys'][0], this['duration'], "#"] );
+			} else
+			{
+				
+				key.push( [this['keys'][0], this['duration'] ] );
+			}
+		}
+		
+	});
+	console.log(JSON.stringify(key));
+	$("form").append("<input type='hidden' name='notes' value='"+JSON.stringify(key)+"'/>");
 };
