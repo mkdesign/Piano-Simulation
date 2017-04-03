@@ -2,7 +2,7 @@
 <html lang="en-US" direction="ltr">
 <head>
 	<meta charset="utf-8" />
-	<title>First rythms</title>
+	<title>Piano Tutorials</title>
 	<link rel="stylesheet" href="reset.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="jquery.js" ></script>
@@ -111,38 +111,38 @@
 		<div class="clear"></div>
 	</div> -->
 	<div class="keys minipad">
-		<div class="key"></div>
-		<div class="key black b0"></div>
-		<div class="key"></div>
+		<div class="key"><span>Q</span></div>
+		<div class="key black b0"><span>1</span></div>
+		<div class="key"><span>W</span></div>
 
-		<div class="key"></div>
-		<div class="key black b1"></div>
-		<div class="key"></div>
-		<div class="key black b2"></div>
-		<div class="key"></div>
-		<div class="key"></div>
-		<div class="key black b3"></div>
-		<div class="key"></div>
-		<div class="key black b4"></div>
-		<div class="key"></div>
-		<div class="key black b5"></div>
-		<div class="key"></div>
+		<div class="key"><span>E</span></div>
+		<div class="key black b1"><span>2</span></div>
+		<div class="key"><span>R</span></div>
+		<div class="key black b2"><span>3</span></div>
+		<div class="key"><span>T</span></div>
+		<div class="key"><span>Y</span></div>
+		<div class="key black b3"><span>4</span></div>
+		<div class="key"><span>U</span></div>
+		<div class="key black b4"><span>5</span></div>
+		<div class="key"><span>I</span></div>
+		<div class="key black b5"><span>6</span></div>
+		<div class="key"><span>A</span></div>
 
-		<div class="key"></div>
-		<div class="key black b6"></div>
-		<div class="key"></div>
-		<div class="key black b7"></div>
-		<div class="key"></div>
-		<div class="key"></div>
-		<div class="key black b8"></div>
-		<div class="key"></div>
-		<div class="key black b9"></div>
-		<div class="key"></div>
-		<div class="key black b10"></div>
-		<div class="key"></div>
+		<div class="key"><span>S</span></div>
+		<div class="key black b6"><span>7</span></div>
+		<div class="key"><span>D</span></div>
+		<div class="key black b7"><span>8</span></div>
+		<div class="key"><span>F</span></div>
+		<div class="key"><span>G</span></div>
+		<div class="key black b8"><span>9</span></div>
+		<div class="key"><span>H</span></div>
+		<div class="key black b9"><span>0</span></div>
+		<div class="key"><span>J</span></div>
+		<div class="key black b10"><span>-</span></div>
+		<div class="key"><span>K</span></div>
 		<div class="clear"></div>
 	</div>
-	<p class="record">Run</p>
+	<p class="record">Record</p>
 	<p class="play_record">play recorded</p>
 	<div class="control">
 		<div class="play" onclick="tut.show();"></div>
@@ -309,11 +309,10 @@
 					})
 				});
 				$(document).keypress(function(event){
-
 					var pos = notesByKeyCode.indexOf(event.which);
 					playsong(audios[pos],startTime);
 					keys.eq(pos).addClass('active');
-
+					
 					setTimeout(function(){
 						keys.eq(pos).removeClass('active');
 					},1000);
@@ -352,7 +351,6 @@
 					that.userAnswered = true;
 					that.checkAnswer(answerCode);
 				});
-
 
 			}
 
@@ -431,11 +429,9 @@
 			})
 
 			$('p.play_record').click(function(){
-				alert(recordNotes.length);
 				console.log(recordRythm);
 				if(recordNotes.length) {
 					for(var i=0; i<recordNotes.length; i++) {
-						alert(i+' '+ recordRythm[i]);
 						playsong(bufferList[recordNotes[i]],recordRythm[i]);
 					}
 				}

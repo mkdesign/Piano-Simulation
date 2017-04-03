@@ -88,3 +88,9 @@ instrumentGenerator.prototype.removeKeyAnimate = function(array,i,time){
 		keys.eq(array[i]).removeClass('active');
 	},time[i]*1000*that.ratio)
 }
+
+instrumentGenerator.prototype.changeTempo = function(tempovalue){
+	this.tempo= tempovalue;
+	this.ratio = this.zarb / tempovalue;
+
+}

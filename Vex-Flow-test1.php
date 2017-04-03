@@ -34,7 +34,7 @@
 <html lang="en-US" direction="ltr">
 <head>
 	<meta charset="utf-8" />
-	<title>First rythms</title>
+	<title>Composer</title>
 	<link rel="stylesheet" href="reset.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="jquery.js" ></script>
@@ -143,12 +143,11 @@
 
 		<div class="clear"></div>
 	</div>
-	<p>Run</p>
 	<div class="control">
 		<div class="play"></div>
 	</div>
 	<div class="stave">
-		<canvas width="700" height="200"></canvas>
+		<canvas width="1030" height="200"></canvas>
 	</div>
 	<div class="notation">
 		<div class="choose_note">
@@ -188,17 +187,19 @@
 				<option value="16">Sixteenth</option>
 			</select>
 		</div>
+		<div class="clear"></div>
 		<input type="button" value="Add Note" id="add_note">
 		<button id="edit_note">edit</button>
-		<button id="cursor_animate">cursor</button>
+		<!-- <button id="cursor_animate">cursor</button> -->
 		<form action='' method='POST'>
 			<button id="download">Downlaod</button>
 		</form>
+		<div class="clear"></div>
 		<form action='' method='POST' enctype="multipart/form-data">
-			<input type='file' name='textfile'/>
-			<br/>
+			<div class="file">Choose File<input type='file' name='textfile'/></div>
 			<input type='submit' value='Upload File'/>
 		</form>
+		<div class="clear"></div>
 	</div>
 
 	<script type="text/javascript">
@@ -311,7 +312,7 @@
 			})
 
 			$('canvas').click(function(){
-				pianoComposer.findSelectedNote(event.clientX);
+				pianoComposer.findSelectedNote(event.clientX-event.currentTarget.offsetLeft);
 				pianoComposer.generateStave();
 				pianoComposer.generateNotes();
 				pianoComposer.highlighter();
@@ -353,6 +354,10 @@
 
 			$('#download').click(function(){
 				pianoComposer.generateInput();
+			})
+
+			$('#tempochange').change(function () {
+				pianoGenerator.changeTempo($(this).val());
 			})
 			var upload_files_keys = <?php echo (isset($ustring))?$ustring:"' '"  ?>;
 
